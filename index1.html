@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+   <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup">SIGNUP</button>
+            </div>
+        </div>
+    </header>
+    <nav class="nav">
+        <a href="#" class="nav-link active">HOME</a>
+        <a href="#" class="nav-link">DISCOVER</a>
+        <a href="#" class="nav-link">REVIEWS</a>
+        <a href="#" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+    <main class="main-content">
+        <!-- Featured Carousel Section -->
+        <section class="featured-section">
+            <div class="carousel-container">
+                <!-- Radio buttons for carousel -->
+                <input type="radio" name="carousel" id="slide1" checked>
+                <input type="radio" name="carousel" id="slide2">
+                <input type="radio" name="carousel" id="slide3">
+                
+                <div class="carousel-track">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="store-featured">
+                                <div class="store-image">
+                                    <img src="https://via.placeholder.com/400x400/00703c/ffffff?text=STORE+1" alt="Store 1">
+                                </div>
+                                <div class="store-rating">
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <div class="reviews-list">
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="store-featured">
+                                <div class="store-image">
+                                    <img src="https://via.placeholder.com/400x400/00703c/ffffff?text=STORE+2" alt="Store 2">
+                                </div>
+                                <div class="store-rating">
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <div class="reviews-list">
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="store-featured">
+                                <div class="store-image">
+                                    <img src="https://via.placeholder.com/400x400/00703c/ffffff?text=STORE+3" alt="Store 3">
+                                </div>
+                                <div class="store-rating">
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                            </div>
+                            <div class="reviews-list">
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                                <div class="review-headline">
+                                    <span class="review-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Dots  -->
+                <div class="carousel-dots">
+                    <label for="slide1" class="dot"></label>
+                    <label for="slide2" class="dot"></label>
+                    <label for="slide3" class="dot"></label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Stores Section -->
+        <section class="featured-stores">
+            <h2 class="section-title">FEATURED STORES OF THE MONTH</h2>
+            <div class="stores-grid">
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+                <div class="store-card">
+                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
+                </div>
+            </div>
+        </section>
+
+        <!-- Verified Stores Section -->
+        <section class="verified-stores">
+            <h2 class="section-title">OFFICIAL STORES</h2>
+            <div class="verified-grid">
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+                <div class="verified-card">
+                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                    <div class="verified-rating">★★★★★</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Reviews Section -->
+        <section class="trending-reviews">
+            <div class="trending-cards">
+                <div class="trending-card">
+                    <h3 class="trending-title">Latest GPU Performance</h3>
+                    <p class="trending-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae erat ut massa tincidunt ullamcorper ac ultrices magna. Maecenas ut erat.</p>
+                </div>
+                <div class="trending-card">
+                    <h3 class="trending-title">Best Budget Builds 2026</h3>
+                    <p class="trending-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae erat ut massa tincidunt ullamcorper ac ultrices magna. Maecenas ut erat.</p>
+                </div>
+                <div class="trending-card">
+                    <h3 class="trending-title">Storage Solutions Guide</h3>
+                    <p class="trending-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vitae erat ut massa tincidunt ullamcorper ac ultrices magna. Maecenas ut erat.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">TRENDING PRODUCT REVIEWS</h2>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+</body>
+</html>
