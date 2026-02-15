@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Store Map - Tech-A-Muna</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link 
+            rel="stylesheet" 
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        />
+
+    </head>
+    <body>
+        <div class="map-page">
+            <div class="store-list">
+
+                <div class="store-item" data-lat="14.5995" data-lng="120.9842">
+                    <h3>PC Store Name</h3>
+                    <div class="store-rating">★★★★★ <span>(6767)</span></div>
+                    <p>Address: Barangay, Street, Building, City</p>
+                    <span class="open">Open • Closes 10 PM</span>
+                </div>
+
+                <div class="store-item" data-lat="14.6091" data-lng="121.0223">
+                    <h3>PC Store Name</h3>
+                    <div class="store-rating">★★★★☆ <span>(1234)</span></div>
+                    <p>Address: Barangay, Street, Building, City</p>
+                    <span class="closed">Closed • Opens 8 AM</span>
+                </div>
+
+                <div class="store-item" data-lat="14.5547" data-lng="121.0244">
+                    <h3>PC Store Name</h3>
+                    <div class="store-rating">★★★★★ <span>(1020)</span></div>
+                    <p>Address: Barangay, Street, Building, City</p>
+                    <span class="open">Open • Closes 7 PM</span>
+                </div>
+
+            </div>
+            <div id="map"></div>
+
+        </div>
+
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+        <script>
+            const map = L.map('map').setView([14.5995, 120.9842], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const storeItems = document.querySelectorAll('.store-item');
+
+            storeItems.forEach(store => {
+                const lat = store.dataset.lat;
+                const lng = store.dataset.lng;
+                const name = store.querySelector('h3').innerText;
+
+                const marker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup(`<b>${name}</b>`);
+
+                store.addEventListener('click', () => {
+                    map.setView([lat, lng], 16);
+                    marker.openPopup();
+                });
+            });
+        </script>
+    </body>
+</html>
