@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+        }
+
+        .admin-header {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .admin-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .data-table {
+            width: 100%;
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .btn-approve {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: var(--white);
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: var(--black);
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: var(--white);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: var(--black);
+        }
+
+        .status-approved {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .status-rejected {
+            background: #dc3545;
+            color: var(--white);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            letter-spacing: 2px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--black);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup">ADMIN</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>ADMIN DASHBOARD</h1>
+            <p style="font-family: var(--font-mono); font-size: 0.9rem;">Manage stores, users, and reviews</p>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('stores')">PENDING STORES</button>
+            <button class="admin-tab" onclick="switchTab('users')">USERS</button>
+            <button class="admin-tab" onclick="switchTab('reviews')">REVIEWS</button>
+            <button class="admin-tab" onclick="switchTab('all-stores')">ALL STORES</button>
+        </div>
+
+        <!-- Pending Stores Tab -->
+        <div id="stores-tab" class="tab-content active">
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Store Name</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Date Applied</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pending-stores-table">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="tab-content">
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Reviews Posted</th>
+                            <th>Date Joined</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div id="reviews-tab" class="tab-content">
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Store</th>
+                            <th>Rating</th>
+                            <th>Review Headline</th>
+                            <th>Date Posted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviews-table">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- All Stores Tab -->
+        <div id="all-stores-tab" class="tab-content">
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Store Name</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Rating</th>
+                            <th>Reviews</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-stores-table">
+                        <!-- Will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Store Modal -->
+    <div id="edit-store-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>EDIT STORE</h2>
+                <button class="close-btn" onclick="closeModal('edit-store-modal')">&times;</button>
+            </div>
+            <form id="edit-store-form">
+                <div class="form-group">
+                    <label>Store Name</label>
+                    <input type="text" id="edit-store-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="edit-store-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" id="edit-store-phone">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea id="edit-store-address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="edit-store-status">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <button type="submit" class="auth-btn">SAVE CHANGES</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="edit-user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>EDIT USER</h2>
+                <button class="close-btn" onclick="closeModal('edit-user-modal')">&times;</button>
+            </div>
+            <form id="edit-user-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="edit-user-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="edit-user-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea id="edit-user-address"></textarea>
+                </div>
+                <button type="submit" class="auth-btn">SAVE CHANGES</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

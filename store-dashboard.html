@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Store Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .store-dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, #005a2f 100%);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .dashboard-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--primary-green);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-product-btn {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .store-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .info-section {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-green);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            font-weight: 600;
+            width: 150px;
+            color: #666;
+        }
+
+        .info-value {
+            flex: 1;
+            font-family: var(--font-mono);
+        }
+
+        .review-item {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .review-user {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .review-rating {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .review-text {
+            font-family: var(--font-mono);
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            letter-spacing: 2px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: var(--black);
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup">MY STORE</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="store-dashboard">
+        <div class="dashboard-header">
+            <div>
+                <h1 id="store-name">PC HUB MANILA</h1>
+                <p style="font-family: var(--font-mono); font-size: 0.9rem;">Store Owner Dashboard</p>
+            </div>
+            <div>
+                <button class="add-product-btn" onclick="window.location.href='index1.html'">VIEW STOREFRONT</button>
+            </div>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-products">0</div>
+                <div class="stat-label">TOTAL PRODUCTS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-reviews">0</div>
+                <div class="stat-label">TOTAL REVIEWS</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avg-rating">0.0</div>
+                <div class="stat-label">AVERAGE RATING</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="views-month">0</div>
+                <div class="stat-label">VIEWS THIS MONTH</div>
+            </div>
+        </div>
+
+        <div class="dashboard-tabs">
+            <button class="dashboard-tab active" onclick="switchTab('products')">PRODUCTS</button>
+            <button class="dashboard-tab" onclick="switchTab('store-info')">STORE INFO</button>
+            <button class="dashboard-tab" onclick="switchTab('reviews')">REVIEWS</button>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products-tab" class="tab-content active">
+            <button class="add-product-btn" onclick="openAddProductModal()">+ ADD NEW PRODUCT</button>
+            <div class="products-grid" id="products-grid">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Store Info Tab -->
+        <div id="store-info-tab" class="tab-content">
+            <button class="add-product-btn" onclick="openEditStoreModal()">EDIT STORE INFORMATION</button>
+            <div class="store-info-grid">
+                <div class="info-section">
+                    <h3>CONTACT DETAILS</h3>
+                    <div class="info-row">
+                        <div class="info-label">Store Name:</div>
+                        <div class="info-value" id="info-store-name">PC Hub Manila</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Email:</div>
+                        <div class="info-value" id="info-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a3c0cccdd7c2c0d7e3d3c0cbd6c1cec2cdcacfc28dc0ccce">[email&#160;protected]</a></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Phone:</div>
+                        <div class="info-value" id="info-phone">+63 917 123 4567</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Website:</div>
+                        <div class="info-value" id="info-website">www.pchubmanila.com</div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <h3>LOCATION</h3>
+                    <div class="info-row">
+                        <div class="info-label">Address:</div>
+                        <div class="info-value" id="info-address">123 Tech Street, Makati City</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">City:</div>
+                        <div class="info-value" id="info-city">Makati City</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Province:</div>
+                        <div class="info-value" id="info-province">Metro Manila</div>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <h3>OPERATING HOURS</h3>
+                    <div class="info-row">
+                        <div class="info-label">Opening Time:</div>
+                        <div class="info-value" id="info-open">9:00 AM</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Closing Time:</div>
+                        <div class="info-value" id="info-close">7:00 PM</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Days Open:</div>
+                        <div class="info-value" id="info-days">Mon - Sat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div id="reviews-tab" class="tab-content">
+            <div id="reviews-container">
+                <!-- Will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="product-modal-title">ADD PRODUCT</h2>
+                <button class="close-btn" onclick="closeModal('product-modal')">&times;</button>
+            </div>
+            <form id="product-form">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Price (PHP)</label>
+                    <input type="number" id="product-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="product-category" placeholder="e.g., Graphics Card, CPU, RAM">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="product-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Stock Quantity</label>
+                    <input type="number" id="product-stock" value="0">
+                </div>
+                <button type="submit" class="auth-btn">SAVE PRODUCT</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Store Info Modal -->
+    <div id="edit-store-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>EDIT STORE INFORMATION</h2>
+                <button class="close-btn" onclick="closeModal('edit-store-modal')">&times;</button>
+            </div>
+            <form id="edit-store-form">
+                <div class="form-group">
+                    <label>Store Name</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="edit-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" id="edit-phone">
+                </div>
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" id="edit-website">
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea id="edit-address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Opening Time</label>
+                    <input type="time" id="edit-open">
+                </div>
+                <div class="form-group">
+                    <label>Closing Time</label>
+                    <input type="time" id="edit-close">
+                </div>
+                <button type="submit" class="auth-btn">SAVE CHANGES</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" clas

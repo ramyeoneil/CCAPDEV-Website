@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Hub Manila | Tech-A-Muna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .store-page {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+            min-height: calc(100vh - 400px);
+        }
+
+        .store-banner {
+            background: linear-gradient(135deg, var(--primary-green) 0%, #005a2f 100%);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .store-logo {
+            width: 150px;
+            height: 150px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-right: 2rem;
+            color: var(--black);
+        }
+
+        .store-header-info {
+            flex: 1;
+        }
+
+        .store-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .store-rating-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .rating-text {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+        }
+
+        .store-meta {
+            display: flex;
+            gap: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .favorite-btn {
+            background: var(--white);
+            color: var(--primary-green);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+        }
+
+        .store-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .store-tab {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            color: var(--black);
+        }
+
+        .store-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .products-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-item {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 112, 60, 0.15);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .product-details {
+            padding: 1.2rem;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            color: #666;
+            font-family: var(--font-mono);
+            margin-bottom: 0.8rem;
+        }
+
+        .product-price-display {
+            font-size: 1.4rem;
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+
+        .product-stock {
+            font-size: 0.8rem;
+            color: #666;
+            font-family: var(--font-mono);
+            margin-top: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.2rem;
+            color: var(--primary-green);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-green);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        .info-item-label {
+            font-weight: 600;
+            width: 140px;
+            color: #666;
+        }
+
+        .info-item-value {
+            flex: 1;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-green);
+            color: var(--white);
+            border-color: var(--primary-green);
+        }
+
+        .write-review-btn {
+            margin-left: auto;
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+        }
+
+        .review-item {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .review-user {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .review-rating {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .review-text {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup">SIGNUP</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+
+    <div class="store-page">
+        <div class="store-banner">
+            <div style="display: flex; align-items: center; flex: 1;">
+                <div class="store-logo">LOGO</div>
+                <div class="store-header-info">
+                    <h1 class="store-title" id="store-name">PC HUB MANILA</h1>
+                    <div class="store-rating-header">
+                        <span class="rating-stars" id="store-rating">★★★★★</span>
+                        <span class="rating-text"><span id="avg-rating">4.8</span> out of 5 | <span id="review-count">127</span> reviews</span>
+                    </div>
+                    <div class="store-meta">
+                        <span>Makati City</span>
+                        <span>Open Now</span>
+                        <span>#3 in Trending</span>
+                    </div>
+                </div>
+            </div>
+            <button class="favorite-btn" onclick="toggleFavorite()">
+                <span id="fav-icon">ADD TO FAVORITES</span>
+            </button>
+        </div>
+
+        <div class="store-tabs">
+            <button class="store-tab active" onclick="switchTab('products')">PRODUCTS</button>
+            <button class="store-tab" onclick="switchTab('about')">ABOUT</button>
+            <button class="store-tab" onclick="switchTab('reviews')">REVIEWS</button>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products-tab" class="tab-content active">
+            <div class="products-section" id="products-container">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- About Tab -->
+        <div id="about-tab" class="tab-content">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>CONTACT INFORMATION</h3>
+                    <div class="info-item">
+                        <div class="info-item-label">Email:</div>
+                        <div class="info-item-value">contact@pchubmanila.com</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item-label">Phone:</div>
+                        <div class="info-item-value">+63 917 123 4567</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item-label">Website:</div>
+                        <div class="info-item-value">www.pchubmanila.com</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>LOCATION</h3>
+                    <div class="info-item">
+                        <div class="info-item-label">Address:</div>
+                        <div class="info-item-value">123 Tech Street, Makati City, Metro Manila</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item-label">Landmarks:</div>
+                        <div class="info-item-value">Near Glorietta Mall</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>OPERATING HOURS</h3>
+                    <div class="info-item">
+                        <div class="info-item-label">Monday - Friday:</div>
+                        <div class="info-item-value">9:00 AM - 7:00 PM</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item-label">Saturday:</div>
+                        <div class="info-item-value">10:00 AM - 6:00 PM</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-item-label">Sunday:</div>
+                        <div class="info-item-value">Closed</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>ABOUT US</h3>
+                    <p style="font-family: var(--font-mono); line-height: 1.8; color: #444;">
+                        PC Hub Manila has been serving the tech community since 2015. We specialize in high-performance gaming components, workstation builds, and cutting-edge technology. Our team of experts is dedicated to helping you find the perfect components for your needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div id="reviews-tab" class="tab-content">
+            <div class="review-filters">
+                <button class="filter-btn active" onclick="filterReviews('all')">ALL</button>
+                <button class="filter-btn" onclick="filterReviews(5)">5 STARS</button>
+                <button class="filter-btn" onclick="filterReviews(4)">4 STARS</button>
+                <button class="filter-btn" onclick="filterReviews(3)">3 STARS</button>
+                <button class="filter-btn" onclick="filterReviews(2)">2 STARS</button>
+                <button class="filter-btn" onclick="filterReviews(1)">1 STAR</button>
+                <button class="write-review-btn" onclick="writeReview()">WRITE A REVIEW</button>
+            </div>
+            <div id="reviews-container">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="store-page.js"></script>
+    <script>
+        updateHeader();
+    </script>
+</body>
+</html>

@@ -1,60 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tech-A-Muna | Reviews</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn">MAP</button>
-                    <button class="header-btn">FAVS</button>
-                    <button class="header-btn signup">SIGNUP</button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Store Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
             </div>
-        </header>
-        <nav class="nav">
-            <a href="index1.html" class="nav-link">HOME</a>
-            <a href="#" class="nav-link">DISCOVER</a>
-            <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
-            <a href="#" class="nav-link">COMMUNITY</a>
-            <a href="#" class="nav-link">HELP</a>
-        </nav>
-        <main class="auth-page">
-            <div class="auth-card">
-                <h2 class="auth-title">STORE SIGN UP</h2>
-                <form action="store-info.html" class="auth-form">
-                    <label>Email</label>
-                    <input type="email" required>
-                    <label>Password</label>
-                    <input type="password" required>
-                    <label>Confirm Password</label>
-                    <input type="password" required>
-                    <button type="submit" class="auth-btn">NEXT</button>
-                </form>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
-        </main>
-        <footer class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-link">About</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Contact</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Privacy</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Terms</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Social Links</a>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup" onclick="window.location.href='login.html'">LOGIN</button>
             </div>
-        </footer>
-    </body>
+        </div>
+    </header>
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+    <main class="auth-page">
+        <div class="auth-card">
+            <h2 class="auth-title">STORE SIGN UP</h2>
+            <form class="auth-form" id="store-signup-form">
+                <label>Email</label>
+                <input type="email" id="email" required>
+                <label>Password</label>
+                <input type="password" id="password" required>
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-password" required>
+                <button type="submit" class="auth-btn">NEXT</button>
+            </form>
+            <p style="text-align: center; margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--primary-green); font-weight: 600;">Log in</a>
+            </p>
+            <p style="text-align: center; margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.9rem;">
+                Want to register as a user? <a href="signup-user.html" style="color: var(--primary-green); font-weight: 600;">User Signup</a>
+            </p>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+        document.getElementById('store-signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Store initial data in sessionStorage and move to next page
+            const initialData = {
+                email: document.getElementById('email').value,
+                password: password
+            };
+            
+            sessionStorage.setItem('storeSignupData', JSON.stringify(initialData));
+            window.location.href = 'store-info.html';
+        });
+    </script>
+</body>
 </html>

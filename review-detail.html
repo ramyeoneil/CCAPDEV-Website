@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Details | Tech-A-Muna</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .review-detail-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 3rem;
+        }
+
+        .back-button {
+            background: var(--light-gray);
+            color: var(--black);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .review-detail-card {
+            background: var(--white);
+            border: 3px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 112, 60, 0.15);
+        }
+
+        .review-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .review-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .review-user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-green);
+        }
+
+        .review-user-details h3 {
+            font-size: 1.5rem;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-date {
+            font-family: var(--font-mono);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .review-rating-large {
+            text-align: right;
+        }
+
+        .review-stars-large {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            letter-spacing: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-rating-text {
+            font-family: var(--font-mono);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .store-badge {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-title {
+            font-size: 2rem;
+            color: var(--primary-green);
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .review-full-text {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .review-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-images img {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid var(--light-gray);
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--light-gray);
+        }
+
+        .action-button {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--primary-green);
+            background: transparent;
+            color: var(--primary-green);
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .action-button.primary {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn" onclick="window.location.href='favorites.html'">FAVS</button>
+                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+
+    <div class="review-detail-container">
+        <button class="back-button" onclick="window.history.back()">← BACK TO REVIEWS</button>
+
+        <div class="review-detail-card">
+            <div class="review-detail-header">
+                <div class="review-user-info">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" 
+                         alt="User Avatar" class="review-user-avatar">
+                    <div class="review-user-details">
+                        <h3 id="reviewer-name">Loading...</h3>
+                        <div class="review-date" id="review-date">Loading...</div>
+                    </div>
+                </div>
+                <div class="review-rating-large">
+                    <div class="review-stars-large" id="review-stars">★★★★★</div>
+                    <div class="review-rating-text" id="rating-text">5.0 out of 5</div>
+                </div>
+            </div>
+
+            <div class="store-badge" id="store-name">PC Hub Manila</div>
+
+            <h1 class="review-title" id="review-headline">Outstanding customer service and lightning-fast shipping times</h1>
+
+            <div class="review-full-text" id="review-full-text">
+                Loading review content...
+            </div>
+
+            <div class="review-images" id="review-images">
+                <!-- Images will be loaded here if available -->
+            </div>
+
+            <div class="review-actions">
+                <button class="action-button primary" onclick="viewStore()">VIEW STORE</button>
+                <button class="action-button" onclick="toggleReviewFavorite()">
+                    <span id="fav-icon">♡</span> ADD TO FAVORITES
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Update header based on login status
+        updateHeader();
+        makeLogoClickable();
+
+        // Get review ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const reviewId = urlParams.get('id');
+
+        // Load review data
+        function loadReview() {
+            const reviews = getAllReviews();
+            const review = reviews.find(r => r.id == reviewId);
+
+            if (review) {
+                document.getElementById('reviewer-name').textContent = review.username;
+                document.getElementById('review-date').textContent = review.date;
+                document.getElementById('review-stars').textContent = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                document.getElementById('rating-text').textContent = `${review.rating}.0 out of 5`;
+                document.getElementById('store-name').textContent = review.storeName || 'PC Hub Manila';
+                document.getElementById('review-headline').textContent = review.headline;
+                
+                // Generate full review text (in real app, this would come from database)
+                const fullText = review.text + "\n\n" + 
+                    "I recently purchased from this store and wanted to share my detailed experience. " +
+                    "The entire process from browsing to delivery was seamless. The staff was knowledgeable " +
+                    "and helped me choose the right components for my build. The products arrived well-packaged " +
+                    "and in perfect condition. I highly recommend this store to anyone looking for quality PC parts " +
+                    "and excellent customer service. Their after-sales support is also top-notch, and they stand " +
+                    "behind their products with solid warranties.";
+                    
+                document.getElementById('review-full-text').textContent = fullText;
+
+                // Check if review is favorited
+                checkIfFavorited();
+            } else {
+                showNotification('Review not found', 'Error', 'error');
+                setTimeout(() => {
+                    window.location.href = 'reviewtab.html';
+                }, 2000);
+            }
+        }
+
+        // Check if review is favorited
+        function checkIfFavorited() {
+            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
+            const isFavorited = favorites.includes(parseInt(reviewId));
+            
+            const favIcon = document.getElementById('fav-icon');
+            const favButton = favIcon.parentElement;
+            
+            if (isFavorited) {
+                favIcon.textContent = '♥';
+                favButton.innerHTML = '<span id="fav-icon">♥</span> REMOVE FROM FAVORITES';
+            }
+        }
+
+        // Toggle favorite
+        function toggleReviewFavorite() {
+            if (!requireLogin('favorite this review')) {
+                return;
+            }
+            
+            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
+            const reviewIdNum = parseInt(reviewId);
+            const index = favorites.indexOf(reviewIdNum);
+            
+            const favIcon = document.getElementById('fav-icon');
+            const favButton = favIcon.parentElement;
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+                favIcon.textContent = '♡';
+                favButton.innerHTML = '<span id="fav-icon">♡</span> ADD TO FAVORITES';
+                showNotification('Removed from favorites', 'Removed', 'warning');
+            } else {
+                favorites.push(reviewIdNum);
+                favIcon.textContent = '♥';
+                favButton.innerHTML = '<span id="fav-icon">♥</span> REMOVE FROM FAVORITES';
+                showNotification('Added to favorites!', 'Success', 'success');
+            }
+            
+            localStorage.setItem('techamuna_favorite_reviews', JSON.stringify(favorites));
+        }
+
+        // View store
+        function viewStore() {
+            window.location.href = 'store-page.html';
+        }
+
+        // Load review on page load
+        loadReview();
+    </script>
+</body>
+</html>

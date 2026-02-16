@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Community</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .community-page {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 400px);
+        }
+
+        .create-post-section {
+            background: var(--white);
+            border: 3px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .create-post-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .create-post-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--light-gray);
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: #666;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .create-post-btn:hover {
+            border-color: var(--primary-green);
+            background: #f8f9fa;
+        }
+
+        .community-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .community-filter-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .community-filter-btn.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 14px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 112, 60, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .post-user-info {
+            flex: 1;
+        }
+
+        .post-username {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--black);
+            letter-spacing: 0.5px;
+        }
+
+        .post-date {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .post-content {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 2rem;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 1.2rem;
+        }
+
+        .post-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-action-btn:hover {
+            color: var(--primary-green);
+        }
+
+        .post-action-btn.liked {
+            color: var(--primary-green);
+        }
+
+        .action-icon {
+            font-size: 1.2rem;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup">SIGNUP</button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link">REVIEWS</a>
+        <a href="community.html" class="nav-link active">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+
+    <main class="community-page">
+        <h2 class="section-title">COMMUNITY</h2>
+
+        <div class="create-post-section">
+            <div class="create-post-title">SHARE WITH THE COMMUNITY</div>
+            <button class="create-post-btn" onclick="createPost()">
+                What's on your mind? Share your build, ask questions, or discuss tech...
+            </button>
+        </div>
+
+        <div class="community-filters">
+            <button class="community-filter-btn active" onclick="filterPosts('all')">TRENDING</button>
+            <button class="community-filter-btn" onclick="filterPosts('builds')">BUILDS</button>
+            <button class="community-filter-btn" onclick="filterPosts('questions')">QUESTIONS</button>
+            <button class="community-filter-btn" onclick="filterPosts('discussions')">DISCUSSIONS</button>
+        </div>
+
+        <div class="posts-container" id="posts-container">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Update header based on login status
+        updateHeader();
+        makeLogoClickable();
+
+        function loadPosts(filter = 'all') {
+            const posts = getCommunityPosts();
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';
+
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="no-posts">No posts yet. Be the first to share!</div>';
+                return;
+            }
+
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'post-card';
+
+                const initials = post.username.substring(0, 2).toUpperCase();
+                const imageHTML = post.image ? `<img src="${post.image}" alt="Post image" class="post-image">` : '';
+
+                card.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-avatar">${initials}</div>
+                        <div class="post-user-info">
+                            <div class="post-username">${post.username}</div>
+                            <div class="post-date">${post.date}</div>
+                        </div>
+                    </div>
+                    <h3 class="post-title">${post.title}</h3>
+                    <div class="post-content">${post.content}</div>
+                    ${imageHTML}
+                    <div class="post-actions">
+                        <button class="post-action-btn" onclick="toggleLike(${post.id}, event)">
+                            <span class="action-icon">LIKE</span>
+                            <span id="like-count-${post.id}">${post.likes}</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="action-icon">COMMENTS</span>
+                            <span>${post.comments} Comments</span>
+                        </button>
+                        <button class="post-action-btn">
+                            <span class="action-icon">SHARE</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function filterPosts(filter) {
+            // Update active button
+            document.querySelectorAll('.community-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // For now, just reload all posts
+            // In a real app, you'd filter by category
+            loadPosts(filter);
+        }
+
+        function createPost() {
+            if (!requireLogin('create a post')) {
+                return;
+            }
+            
+            showNotification('Post creation feature coming soon!', 'Coming Soon', 'success');
+        }
+
+        function toggleLike(postId, event) {
+            if (!requireLogin('like this post')) {
+                return;
+            }
+
+            const button = event.currentTarget;
+            const posts = getCommunityPosts();
+            const post = posts.find(p => p.id === postId);
+            
+            if (post) {
+                // Check if already liked
+                const likedPosts = JSON.parse(localStorage.getItem('techamuna_liked_posts') || '[]');
+                const isLiked = likedPosts.includes(postId);
+                
+                if (isLiked) {
+                    // Unlike
+                    post.likes--;
+                    const index = likedPosts.indexOf(postId);
+                    likedPosts.splice(index, 1);
+                    button.classList.remove('liked');
+                } else {
+                    // Like
+                    post.likes++;
+                    likedPosts.push(postId);
+                    button.classList.add('liked');
+                }
+                
+                localStorage.setItem('techamuna_liked_posts', JSON.stringify(likedPosts));
+                saveCommunityPosts(posts);
+                
+                // Update display
+                document.getElementById(`like-count-${postId}`).textContent = post.likes;
+            }
+        }
+
+        // Load posts on page load
+        loadPosts();
+
+        // Check and mark liked posts
+        function markLikedPosts() {
+            const likedPosts = JSON.parse(localStorage.getItem('techamuna_liked_posts') || '[]');
+            likedPosts.forEach(postId => {
+                const buttons = document.querySelectorAll('.post-action-btn');
+                buttons.forEach(btn => {
+                    if (btn.onclick && btn.onclick.toString().includes(`toggleLike(${postId}`)) {
+                        btn.classList.add('liked');
+                    }
+                });
+            });
+        }
+
+        setTimeout(markLikedPosts, 100);
+    </script>
+</body>
+</html>

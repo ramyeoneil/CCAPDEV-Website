@@ -1,114 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tech-A-Muna | Reviews</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn">MAP</button>
-                    <button class="header-btn">FAVS</button>
-                    <button class="header-btn signup">SIGNUP</button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Store Information</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
             </div>
-        </header>
-        <nav class="nav">
-            <a href="index1.html" class="nav-link">HOME</a>
-            <a href="#" class="nav-link">DISCOVER</a>
-            <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
-            <a href="#" class="nav-link">COMMUNITY</a>
-            <a href="#" class="nav-link">HELP</a>
-        </nav>
-        <main class="auth-page">
-            <div class="auth-card wide">
-                <h2 class="auth-title">STORE INFORMATION</h2>
-                <h3 class="form-section-title">Store & Contact Details</h3>
-                <form class="auth-grid">
-                    <div>
-                        <label>Store Name</label>
-                        <input type="text">
-                        <label>Store Email</label>
-                        <input type="email">
-                        <label>Phone Number</label>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <label>Online Shop Link</label>
-                        <input type="url">
-                    </div>
-                </form>
-                <h3 class="form-section-title">Store Address</h3>
-                <form class="auth-grid">
-                    <div>
-                        <label>Region</label>
-                        <input type="text">
-                        <label>Province</label>
-                        <input type="text">
-                    </div>
-                    <div>
-                        <label>City</label>
-                        <input type="text">
-                        <label>Complete Address</label>
-                        <input type="text">
-                    </div>
-                </form>
-                <h3 class="form-section-title">Operating Hours</h3>
-                <form class="auth-grid">
-                    <div>
-                        <label>Opening Time</label>
-                        <input type="time">
-                        <label>Closing Time</label>
-                        <input type="time">
-                    </div>
-                    <div class="operating-days">
-                        <label>
-                            <input type="checkbox"> Monday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Tuesday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Wednesday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Thursday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Friday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Saturday
-                        </label>
-                        <label>
-                            <input type="checkbox"> Sunday
-                        </label>
-                    </div>
-                </form>
-                <button class="auth-btn">SUBMIT</button>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
-        </main>
-        <footer class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-link">About</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Contact</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Privacy</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Terms</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Social Links</a>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup" onclick="window.location.href='login.html'">LOGIN</button>
             </div>
-        </footer>
-    </body>
+        </div>
+    </header>
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+    <main class="auth-page">
+        <div class="auth-card wide">
+            <h2 class="auth-title">STORE INFORMATION</h2>
+            <h3 class="form-section-title">Store & Contact Details</h3>
+            <form class="auth-grid" id="store-info-form">
+                <div>
+                    <label>Store Name</label>
+                    <input type="text" id="store-name" required>
+                    <label>Store Email</label>
+                    <input type="email" id="store-email" required>
+                    <label>Phone Number</label>
+                    <input type="text" id="phone" required>
+                </div>
+                <div>
+                    <label>Online Shop Link</label>
+                    <input type="url" id="website" placeholder="https://yourstore.com">
+                </div>
+            </form>
+            <h3 class="form-section-title">Store Address</h3>
+            <form class="auth-grid">
+                <div>
+                    <label>Region</label>
+                    <input type="text" id="region" required>
+                    <label>Province</label>
+                    <input type="text" id="province" required>
+                </div>
+                <div>
+                    <label>City</label>
+                    <input type="text" id="city" required>
+                    <label>Complete Address</label>
+                    <input type="text" id="address" required>
+                </div>
+            </form>
+            <h3 class="form-section-title">Operating Hours</h3>
+            <form class="auth-grid">
+                <div>
+                    <label>Opening Time</label>
+                    <input type="time" id="open-time" required>
+                    <label>Closing Time</label>
+                    <input type="time" id="close-time" required>
+                </div>
+                <div class="operating-days">
+                    <label>
+                        <input type="checkbox" value="Monday"> Monday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Tuesday"> Tuesday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Wednesday"> Wednesday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Thursday"> Thursday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Friday"> Friday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Saturday"> Saturday
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Sunday"> Sunday
+                    </label>
+                </div>
+            </form>
+            <button class="auth-btn" onclick="submitStoreInfo()">SUBMIT</button>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+        // Check if we have initial signup data
+        const initialData = JSON.parse(sessionStorage.getItem('storeSignupData'));
+        if (!initialData) {
+            alert('Please start from the signup page');
+            window.location.href = 'signup-store.html';
+        }
+
+        function submitStoreInfo() {
+            const operatingDays = Array.from(document.querySelectorAll('.operating-days input:checked'))
+                .map(cb => cb.value);
+            
+            if (operatingDays.length === 0) {
+                alert('Please select at least one operating day');
+                return;
+            }
+
+            const storeData = {
+                type: 'store',
+                email: initialData.email,
+                password: initialData.password,
+                storeName: document.getElementById('store-name').value,
+                storeEmail: document.getElementById('store-email').value,
+                phone: document.getElementById('phone').value,
+                website: document.getElementById('website').value,
+                region: document.getElementById('region').value,
+                province: document.getElementById('province').value,
+                city: document.getElementById('city').value,
+                address: document.getElementById('address').value,
+                openTime: document.getElementById('open-time').value,
+                closeTime: document.getElementById('close-time').value,
+                operatingDays: operatingDays,
+                status: 'pending' // Store needs admin approval
+            };
+
+            const result = registerUser(storeData);
+
+            if (result.success) {
+                // Also add to stores list
+                const stores = getAllStores();
+                stores.push({
+                    id: result.user.id,
+                    name: storeData.storeName,
+                    email: storeData.email,
+                    location: storeData.city,
+                    rating: 0,
+                    reviewCount: 0,
+                    status: 'pending',
+                    dateApplied: result.user.dateJoined
+                });
+                saveStores(stores);
+
+                sessionStorage.removeItem('storeSignupData');
+                alert('Store application submitted! Please wait for admin approval before you can log in.');
+                window.location.href = 'login.html';
+            } else {
+                alert(result.message);
+            }
+        }
+    </script>
+</body>
 </html>

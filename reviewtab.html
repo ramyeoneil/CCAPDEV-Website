@@ -1,648 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tech-A-Muna | Reviews</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header class="header">
-            <div class="header-content">
-                <div class="logo-container">
-                    <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
-                </div>
-                <div class="header-actions">
-                    <button class="header-btn">MAP</button>
-                    <button class="header-btn">FAVS</button>
-                    <button class="header-btn signup">SIGNUP</button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech-A-Muna | Reviews</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="Tech-A-Muna Logo" class="logo-image">
             </div>
-        </header>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+            </div>
+        </div>
+    </header>
 
-        <nav class="nav">
-            <a href="index1.html" class="nav-link">HOME</a>
-            <a href="#" class="nav-link">DISCOVER</a>
-            <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
-            <a href="#" class="nav-link">COMMUNITY</a>
-            <a href="#" class="nav-link">HELP</a>
-        </nav>
-        <main class="reviews-page">
-            <h2 class="section-title">RECENT REVIEWS</h2>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_1</h4>
-                                <span>15 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
+    <nav class="nav">
+        <a href="index1.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+    <main class="reviews-page">
+        <h2 class="section-title">RECENT REVIEWS</h2>
+        <div class="reviews-grid" id="reviews-grid-container">
+            <!-- Will be populated by JS -->
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="#" class="footer-link">About</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Contact</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Privacy</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Terms</a>
+            <span class="footer-separator">|</span>
+            <a href="#" class="footer-link">Social Links</a>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+        // Update header based on login status
+        updateHeader();
+        makeLogoClickable();
 
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
+        // Load all reviews
+        function loadAllReviews() {
+            const reviews = getAllReviews();
+            const container = document.getElementById('reviews-grid-container');
+            container.innerHTML = '';
 
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_2</h4>
-                                <span>23 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.3</h4>
-                                <span>3 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_4</h4>
-                                <span>2 days ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.5</h4>
-                                <span>14 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_6</h4>
-                                <span>7 days ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.7</h4>
-                                <span>10 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.otso</h4>
-                                <span>1 day ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_9</h4>
-                                <span>10 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.10</h4>
-                                <span>1 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_11</h4>
-                                <span>15 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_12</h4>
-                                <span>8 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.13</h4>
-                                <span>5 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_14</h4>
-                                <span>3 days ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.15</h4>
-                                <span>1 hour ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_16</h4>
-                                <span>15 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.17</h4>
-                                <span>10 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_18</h4>
-                                <span>2 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_19</h4>
-                                <span>6 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.20</h4>
-                                <span>17 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account21</h4>
-                                <span>9 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_22</h4>
-                                <span>18 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.23</h4>
-                                <span>6 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account24</h4>
-                                <span>3 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_25</h4>
-                                <span>12 days ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account.26</h4>
-                                <span>59 mins ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img scr="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>account_27</h4>
-                                <span>4 hours ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-
-                    <div class="review-content">
-                        <h3>PC Store Name</h3>
-                        <div class="review-stars">★★★★★</div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Etiam vitae erat ut malesuada ullamcorper.
-                        </p>
-                    </div>
-                </div>
+            reviews.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.style.cursor = 'pointer';
+                card.onclick = () => window.location.href = `review-detail.html?id=${review.id}`;
                 
-            </div>
-        </main>
-        <footer class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-link">About</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Contact</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Privacy</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Terms</a>
-                <span class="footer-separator">|</span>
-                <a href="#" class="footer-link">Social Links</a>
-            </div>
-        </footer>
-    </body>
-</html>
+                card.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-user">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
+                            <div>
+                                <h4>${review.username}</h4>
+                                <span>${review.date}</span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
+
+                    <div class="review-content">
+                        <h3>${review.storeName || 'PC Store'}</h3>
+                        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                        <p>${review.text}</p>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Load reviews on page load
+        loadAllReviews();
+    </script>
+</body>
+</html>
