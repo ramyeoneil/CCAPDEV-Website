@@ -51,11 +51,8 @@ body {
 }
 
 .logo-image {
-    width: 70px;
-    height: 70px;
-    background: white;
-    padding: 8px;
-    border-radius: 8px;
+    width: 138.9px;
+    height: 72.2px;
     object-fit: contain;
     display: block;
 }
