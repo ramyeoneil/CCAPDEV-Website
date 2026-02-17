@@ -13,7 +13,7 @@
     <div class="header-content">
 
         <div class="logo-container">
-            <img src="logo.png" class="logo-image">
+            <img src="logo.svg" class="logo-image">
         </div>
 
         <div class="search-container">
