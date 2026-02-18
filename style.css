@@ -1059,3 +1059,28 @@ body {
 .faq-item {
     margin-bottom: 20px;
 }
+
+/* Scroll reveal animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 900ms cubic-bezier(.2,.9,.2,1), transform 900ms cubic-bezier(.2,.9,.2,1);
+    will-change: opacity, transform;
+}
+
+/* variants */
+.reveal.slide-left { transform: translateX(-28px); }
+.reveal.slide-right { transform: translateX(28px); }
+.reveal.zoom { transform: scale(.98); }
+
+/* when element becomes visible */
+.reveal.in-view { opacity: 1; transform: none; }
+
+/* optional subtle differences */
+.reveal.slow { transition-duration: 1100ms; }
+.reveal.fast { transition-duration: 420ms; }
+
+/* helpers for manual delays (if not using inline styles) */
+.delay-1 { transition-delay: 80ms; }
+.delay-2 { transition-delay: 160ms; }
+.delay-3 { transition-delay: 240ms; }
