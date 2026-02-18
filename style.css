@@ -133,6 +133,40 @@ body {
     box-shadow: 0 6px 20px rgba(0,0,0,0.06);
 }
 
+/* Hero motto */
+.hero-motto {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.05;
+    letter-spacing: 0.6px;
+}
+
+/* blinking cursor for typewriter */
+.hero-motto::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-left: 8px;
+    vertical-align: middle;
+    background: var(--primary-green);
+    opacity: 1;
+    animation: cursor-blink 800ms steps(1) infinite;
+}
+
+.hero-motto.typed::after {
+    opacity: 0; /* hide cursor after typing finished */
+}
+
+@keyframes cursor-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 /* Verified stores continuous carousel */
 .verified-carousel {
     overflow: hidden;

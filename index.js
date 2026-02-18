@@ -82,4 +82,26 @@ document.addEventListener('DOMContentLoaded', function () {
             el.classList.add('in-view');
         });
     }
+
+    // Typewriter effect for hero motto
+    const mottoEl = document.querySelector('.hero-motto');
+    if (mottoEl) {
+        const fullText = mottoEl.dataset.text ? mottoEl.dataset.text.trim() : mottoEl.textContent.trim();
+        if (fullText) {
+            mottoEl.textContent = '';
+            mottoEl.classList.remove('typed');
+            let i = 0;
+            mottoEl.classList.add('typing');
+            const speed = 50; // ms per character
+            const typer = setInterval(() => {
+                mottoEl.textContent += fullText.charAt(i);
+                i++;
+                if (i >= fullText.length) {
+                    clearInterval(typer);
+                    mottoEl.classList.remove('typing');
+                    mottoEl.classList.add('typed');
+                }
+            }, speed);
+        }
+    }
 });
