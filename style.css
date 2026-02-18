@@ -501,6 +501,13 @@ body {
   color: var(--primary-green);
 }
 
+/* Footer copyright line */
+.footer-copy {
+    text-align: center;
+    color: #333;
+    font-size: 0.95rem;
+    padding: 12px 0 18px;
+}
 
 .reviews-page {
     max-width: 1400px;
