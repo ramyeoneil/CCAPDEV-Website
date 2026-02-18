@@ -282,6 +282,7 @@ function updateHeader() {
     if (!headerActions) return;
     
     if (user) {
+        let profilelink = 'userpage.html'
         let dashboardLink = 'index1.html';
         let dashboardText = user.username || user.storeName || 'ADMIN';
         
@@ -294,7 +295,7 @@ function updateHeader() {
         headerActions.innerHTML = `
             <button class="header-btn">MAP</button>
             <button class="header-btn" onclick="window.location.href='favorites.html'">FAVS</button>
-            <button class="header-btn signup" onclick="window.location.href='${dashboardLink}'">${dashboardText.toUpperCase()}</button>
+            <button class="header-btn signup" onclick="window.location.href='${profilelink}'">${dashboardText.toUpperCase()}</button>
             <button class="header-btn" onclick="logout()">LOGOUT</button>
         `;
     } else {
