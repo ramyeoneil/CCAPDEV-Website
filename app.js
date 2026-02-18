@@ -161,7 +161,7 @@ async function logout() {
         localStorage.setItem('techamuna_currentUser', JSON.stringify(null));
         showNotification('You have been logged out successfully', 'Logged Out', 'success');
         setTimeout(() => {
-            window.location.href = 'index1.html';
+            window.location.href = 'index.html';
         }, 1500);
     }
 }
@@ -267,7 +267,7 @@ function requireAuth(allowedTypes = []) {
     
     if (allowedTypes.length > 0 && !allowedTypes.includes(user.type)) {
         alert('Access denied');
-        window.location.href = 'index1.html';
+        window.location.href = 'index.html';
         return false;
     }
     
@@ -283,7 +283,7 @@ function updateHeader() {
     
     if (user) {
         let profilelink = 'userpage.html'
-        let dashboardLink = 'index1.html';
+        let dashboardLink = 'index.html';
         let dashboardText = user.username || user.storeName || 'ADMIN';
         
         if (user.type === 'admin') {
@@ -322,7 +322,7 @@ function makeLogoClickable() {
     if (logoContainer) {
         logoContainer.style.cursor = 'pointer';
         logoContainer.onclick = function() {
-            window.location.href = 'index1.html';
+            window.location.href = 'index.html';
         };
     }
 }
