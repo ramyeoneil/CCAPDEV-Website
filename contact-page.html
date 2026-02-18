@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-content">
+
+            <div class="logo-container">
+                <img src="logo.svg" alt="Logo" class="logo-image">
+            </div>
+
+            <div class="search-container">
+                <input type="text" 
+                       class="search-input" 
+                       placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+
+            <div class="header-actions">
+                <button class="header-btn">MAP</button>
+                <button class="header-btn">FAVS</button>
+                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="contact">
+        <div class="contact-wrapper">
+
+            <h1 class="contact-title">Contact our friendly team</h1>
+            <p class="contact-subtitle">Let us know how we can help.</p>
+
+            <div class="contact-grid">
+
+                <div class="contact-card">
+                    <h3>Chat to sales</h3>
+                    <p>Speak to a friendly team.</p>
+                    <a href="mailto:sales@yourmail.com">
+                        sales@yourmail.com
+                    </a>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Chat to support</h3>
+                    <p>We're here to help.</p>
+                    <a href="mailto:support@yourmail.com">
+                        support@yourmail.com
+                    </a>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Visit us</h3>
+                    <p>Visit our office HQ.</p>
+                    <a href="https://maps.google.com" target="_blank">
+                        View on Google Maps
+                    </a>
+                </div>
+
+                <div class="contact-card">
+                    <h3>Call us</h3>
+                    <p>Mon-Fri 9am to 5pm.</p>
+                    <a href="tel:+11230000000">
+                        +1 123-000-0000
+                    </a>
+                </div>
+
+            </div>
+
+            <section class="contact-faq">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h4>Is signing up free?</h4>
+                    <p>Yes, signing up is completely free.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h4>Can I delete my account later?</h4>
+                    <p>Yes, you can delete your account anytime.</p>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+
+     <footer class="custom-footer">
+        <div class="footer-container">
+
+            <div class="footer-left">
+            <div class="footer-logo">
+                <img src="logo.svg" alt="Tech-A-Muna Logo" class="logo-image">
+            </div>
+
+            <a href="contact-page.html" class="footer-btn">CONTACT US</a>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-right">
+            <ul>
+                <li><a href="about-page.html">ABOUT</a></li>
+                <li><a href="privacy-page.html">PRIVACY</a></li>
+                <li><a href="terms-page.html">TERMS</a></li>
+                <li><a href="social-links.html">SOCIAL LINKS</a></li>
+            </ul>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <script src="app.js"></script>
+    <script>
+        updateHeader();
+    </script>
+
+</body>
+</html>
