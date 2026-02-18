@@ -1,68 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Profile - Tech-A-Muna</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-</head>
+window.addEventListener("DOMContentLoaded", function () {
+    loadProfile();
+    loadReviews();
 
-<body>
+    // Image upload listener
+    const imageUpload = document.getElementById("imageUpload");
+    imageUpload.addEventListener("change", handleImageUpload);
 
-<header class="header">
-    <div class="header-content">
+    // Save button listener
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.addEventListener("click", saveProfile);
+});
 
-        <div class="logo-container">
-            <img src="logo.svg" class="logo-image">
-        </div>
+// Load profile from localStorage
+function loadProfile() {
+    const name = localStorage.getItem("username") || "John Doe";
+    const bio = localStorage.getItem("userBio") || "PC enthusiast and reviewer.";
+    const image = localStorage.getItem("profileImage") || "https://via.placeholder.com/150";
 
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
-        </div>
+    document.getElementById("displayName").innerText = name;
+    document.getElementById("displayBio").innerText = bio;
+    document.getElementById("profileImage").src = image;
 
-        <div class="header-actions">
-            <button class="header-btn" onclick="window.location.href='index1.html'">HOME</button>
-        </div>
+    document.getElementById("editName").value = name;
+    document.getElementById("editBio").value = bio;
+}
 
-    </div>
-</header>
+// Toggle edit form visibility
+function toggleEdit() {
+    const form = document.getElementById("editForm");
+    form.style.display = form.style.display === "block" ? "none" : "block";
+}
 
+// Save profile to localStorage
+function saveProfile() {
+    const name = document.getElementById("editName").value;
+    const bio = document.getElementById("editBio").value;
 
-<script src="app.js"></script>
-<script>
-    updateHeader();
-</script>
+    localStorage.setItem("username", name);
+    localStorage.setItem("userBio", bio);
 
-<main class="dashboard-container">
+    alert("Profile updated!");
+    loadProfile();
+    toggleEdit();
+}
 
-    <!-- LEFT PANEL -->
-    <div class="profile-sidebar">
-        <img id="profileImage" src="https://via.placeholder.com/150">
-        <h3 id="displayName">John Doe</h3>
-        <p id="displayBio">PC enthusiast and reviewer.</p>
+// Handle image upload
+function handleImageUpload(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        document.getElementById("profileImage").src = reader.result;
+        localStorage.setItem("profileImage", reader.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
 
-        <button class="edit-btn" onclick="toggleEdit()">Edit Profile</button>
+// Load reviews from localStorage or sample
+function loadReviews() {
+    const reviewGrid = document.getElementById("reviewGrid");
+    reviewGrid.innerHTML = "";
 
-        <div class="edit-form" id="editForm">
-            <input type="text" id="editName" placeholder="Name">
-            <textarea id="editBio" rows="3" placeholder="Bio"></textarea>
-            <input type="file" id="imageUpload" accept="image/*">
-            <button class="save-btn" id="saveBtn">Save</button>
-        </div>
-    </div>
+    const savedReviews = JSON.parse(localStorage.getItem("userReviews"));
 
-    <!-- RIGHT PANEL -->
-    <div class="review-content">
-        <h2>Your Review History</h2>
-        <div class="review-grid" id="reviewGrid">
+    const sampleReviews = [
+        {
+            store: "PC Express - SM North EDSA",
+            text: "Excellent service and very helpful staff when choosing PC parts.",
+            rating: 5
+        },
+        {
+            store: "DynaQuest PC - Manila",
+            text: "Affordable prices and fast delivery. Highly recommended!",
+            rating: 4
+        },
+        {
+            store: "EasyPC - Quezon City",
+            text: "Wide selection of GPUs and smooth warranty process.",
+            rating: 5
+        },
+        {
+            store: "PC Hub - Gilmore",
+            text: "Competitive pricing but store can get crowded.",
+            rating: 4
+        }
+    ];
 
-        </div>
-    </div>
+    const reviews = savedReviews && savedReviews.length > 0 ? savedReviews : sampleReviews;
 
-</main>
+    reviews.forEach(review => {
+        const card = document.createElement("div");
+        card.classList.add("review-card");
 
+        let stars = "";
+        for (let i = 0; i < review.rating; i++) {
+            stars += "★";
+        }
 
-<script src="userpage.js"></script>
+        card.innerHTML = `
+            <h4>${review.store}</h4>
+            <p>${review.text}</p>
+            <div class="rating">${stars}</div>
+        `;
 
-</body>
-</html>
+        reviewGrid.appendChild(card);
+    });
+}
