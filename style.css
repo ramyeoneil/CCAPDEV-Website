@@ -40,8 +40,8 @@ body {
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: space-between;
+    gap: 3rem;
 }
 
 .logo-container {
@@ -108,6 +108,66 @@ body {
     justify-content: center;
     gap: 3rem;
     border-bottom: 2px solid var(--light-gray);
+}
+
+/* Hero search centered on the page */
+.hero-search {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background: linear-gradient(180deg, rgba(0,112,60,0.03), rgba(255,255,255,0));
+}
+.hero-search-inner {
+    width: 70%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.hero-search .search-input {
+    width: 100%;
+    padding: 1.2rem 1.6rem;
+    font-size: 1rem;
+    border-radius: 999px;
+    border: 2px solid var(--light-gray);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Verified stores continuous carousel */
+.verified-carousel {
+    overflow: hidden;
+    padding: 1rem 0 2rem 0;
+}
+.verified-track {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    white-space: nowrap;
+    /* duplicate list scrolls left continuously */
+    animation: scroll-left 36s linear infinite;
+    will-change: transform;
+}
+.verified-card {
+    background: var(--white);
+    border: 2px solid var(--light-gray);
+    border-radius: 12px;
+    padding: 1rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    flex: 0 0 180px;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Reduce visible gap at seam by ensuring the track's contents are inline and duplicated in HTML */
+.verified-track > .verified-card:last-child {
+    margin-right: 0;
 }
 
 .nav-link {

@@ -15,9 +15,6 @@
             <div class="logo-container">
                 <img src="logo-white.svg" alt="Tech-A-Muna Logo" class="logo-image">
             </div>
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
-            </div>
             <div class="header-actions">
                 <button class="header-btn">MAP</button>
                 <button class="header-btn">FAVS</button>
@@ -33,8 +30,16 @@
         <a href="#" class="nav-link">HELP</a>
     </nav>
     <main class="main-content">
+        <!-- Hero search placed center of page -->
+        <section class="hero-search">
+            <div class="hero-search-inner">
+                <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
+            </div>
+        </section>
+
         <!-- Featured Carousel Section -->
         <section class="featured-section">
+            <h2 class="section-title">FEATURED STORES OF THE MONTH</h2>
             <div class="carousel-container">
                 <!-- Radio buttons for carousel -->
                 <input type="radio" name="carousel" id="slide1" checked>
@@ -136,72 +141,37 @@
             </div>
         </section>
 
-        <!-- Featured Stores Section -->
-        <section class="featured-stores">
-            <h2 class="section-title">FEATURED STORES OF THE MONTH</h2>
-            <div class="stores-grid">
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-                <div class="store-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE" alt="Featured Store">
-                </div>
-            </div>
-        </section>
 
-        <!-- Verified Stores Section -->
+        <!-- Verified Stores Section (moved up, continuous carousel) -->
         <section class="verified-stores">
-            <h2 class="section-title">OFFICIAL STORES</h2>
-            <div class="verified-grid">
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
-                </div>
-                <div class="verified-card" onclick="window.location.href='store-page.html'">
-                    <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
-                    <div class="verified-rating">★★★★★</div>
+            <h2 class="section-title">OFFICIAL PARTNER STORES</h2>
+            <div class="verified-carousel">
+                <div class="verified-track">
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
+                    <!-- duplicate for seamless scroll -->
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
+                    <div class="verified-card" onclick="window.location.href='store-page.html'">
+                        <img src="https://via.placeholder.com/150x150/ffffff/00703c?text=VERIFIED" alt="Verified Store">
+                        <div class="verified-rating">★★★★★</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -256,37 +226,6 @@
 
 
     <script src="app.js"></script>
-    <script>
-        updateHeader();
-        
-        // Auto-rotating carousel
-        let currentSlide = 1;
-        const totalSlides = 3;
-        
-        function rotateCarousel() {
-            currentSlide++;
-            if (currentSlide > totalSlides) {
-                currentSlide = 1;
-            }
-            document.getElementById(`slide${currentSlide}`).checked = true;
-        }
-        
-        setInterval(rotateCarousel, 5000);
-        
-        const carouselContainer = document.querySelector('.carousel-container');
-        let intervalId = setInterval(rotateCarousel, 5000);
-        
-        carouselContainer.addEventListener('mouseenter', () => {
-            clearInterval(intervalId);
-        });
-        
-        carouselContainer.addEventListener('mouseleave', () => {
-            intervalId = setInterval(rotateCarousel, 5000);
-        });
-    </script>
-    <script>
-        // Update header based on login status
-        updateHeader();
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
