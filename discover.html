@@ -246,7 +246,7 @@
 
         let currentFilter = 'all';
 
-        function loadStores(filter) {
+        function loadStores(filter, storeIds) {
             if (!filter) filter = 'all';
             const grid = document.getElementById('discover-grid');
             grid.innerHTML = '';
@@ -254,7 +254,9 @@
             const reviews = getAllReviews();
             
             let filteredStores = stores;
-            if (filter !== 'all') {
+            if (Array.isArray(storeIds) && storeIds.length) {
+                filteredStores = stores.filter(s => storeIds.includes(s.id));
+            } else if (filter !== 'all') {
                 filteredStores = stores.filter(function(s) { return s.location === filter; });
             }
 
@@ -307,6 +309,38 @@
             
             loadStores(location);
         }
+
+        // Search products across stores and display matching establishments
+        function searchProductsAndShowStores(query) {
+            if (!query) { loadStores(currentFilter); return; }
+            const products = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+            const matches = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+            const storeIds = Array.from(new Set(matches.map(m => m.storeId)));
+            if (!storeIds.length) {
+                showNotification && showNotification('No stores found with that product', 'No results', 'warning');
+                return;
+            }
+            loadStores(currentFilter, storeIds);
+            const storeNames = stores.filter(s => storeIds.includes(s.id)).map(s => s.name);
+            showNotification && showNotification('Found in: ' + storeNames.join(', '), 'Product Availability', 'success');
+        }
+
+        // Wire header search input (press Enter to search products)
+        (function attachHeaderSearch() {
+            const headerSearch = document.querySelector('.search-input');
+            if (!headerSearch) return;
+            headerSearch.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const q = this.value.trim();
+                    // try product search first
+                    searchProductsAndShowStores(q);
+                }
+            });
+            headerSearch.addEventListener('input', function() {
+                if (!this.value.trim()) loadStores(currentFilter);
+            });
+        })();
 
         loadStores();
     </script>

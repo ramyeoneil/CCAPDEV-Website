@@ -85,8 +85,10 @@
         }
     }
 
-    // create list of names for simple autocomplete
-    const names = stores.map(s => s.name);
+    // create list of names for simple autocomplete (stores + products)
+    const productList = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+    const productNames = Array.from(new Set(productList.map(p => p.name)));
+    const names = stores.map(s => s.name).concat(productNames);
 
     // Simple search: focus on first match
     const searchInput = document.getElementById('mapSearch');
@@ -165,10 +167,52 @@
         acList.setAttribute('aria-hidden', 'true');
         searchInput.setAttribute('aria-expanded', 'false');
         searchInput.setAttribute('aria-activedescendant', '');
+        // If the label matches a product name, show stores that carry it
+        const products = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+        const isProduct = products.some(p => p.name === label);
+        if (isProduct) {
+            highlightStoresForProduct(label);
+            return;
+        }
+
         const found = markers.find(m => m.data.name === label);
         if (found) {
             map.setView([found.data.lat, found.data.lng], 16, { animate: true });
             found.marker.openPopup();
+        }
+    }
+
+    function highlightStoresForProduct(productQuery) {
+        const products = (typeof getAllProducts === 'function') ? getAllProducts() : [];
+        const matches = products.filter(p => p.name.toLowerCase().includes(productQuery.toLowerCase()));
+        const storeIds = Array.from(new Set(matches.map(m => m.storeId)));
+        if (!storeIds.length) {
+            showNotification && showNotification('No stores found with that product', 'No results', 'warning');
+            return;
+        }
+
+        // find markers for these stores (match by store id or name)
+        const matchedMarkers = markers.filter(mm => {
+            // prefer matching by id if available
+            if (mm.data && typeof mm.data.id !== 'undefined') return storeIds.includes(mm.data.id);
+            return storeIds.includes(mm.data.storeId) || storeIds.includes(mm.data.id);
+        });
+
+        const latlngs = matchedMarkers.map(m => [m.data.lat, m.data.lng]);
+        if (latlngs.length) {
+            try {
+                map.fitBounds(latlngs, { padding: [64, 64] });
+            } catch (e) {
+                map.setView(latlngs[0], 14);
+            }
+            // open first popup
+            matchedMarkers[0].marker.openPopup();
+        }
+
+        // show a quick notification listing store names
+        const storeNames = matchedMarkers.map(m => m.data.name).filter(Boolean);
+        if (storeNames.length) {
+            showNotification && showNotification('Found in: ' + storeNames.join(', '), 'Product Availability', 'success');
         }
     }
 
