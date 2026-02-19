@@ -254,87 +254,130 @@
 
         // Get review ID from URL
         const urlParams = new URLSearchParams(window.location.search);
-        const reviewId = urlParams.get('id');
+        const reviewId = parseInt(urlParams.get('id'));
 
-        // Load review data
+        // Load review data and render
         function loadReview() {
             const reviews = getAllReviews();
-            const review = reviews.find(r => r.id == reviewId);
+            const review = reviews.find(r => r.id === reviewId);
 
-            if (review) {
-                document.getElementById('reviewer-name').textContent = review.username;
-                document.getElementById('review-date').textContent = review.date;
-                document.getElementById('review-stars').textContent = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-                document.getElementById('rating-text').textContent = `${review.rating}.0 out of 5`;
-                document.getElementById('store-name').textContent = review.storeName || 'PC Hub Manila';
-                document.getElementById('review-headline').textContent = review.headline;
-                
-                // Generate full review text (in real app, this would come from database)
-                const fullText = review.text + "\n\n" + 
-                    "I recently purchased from this store and wanted to share my detailed experience. " +
-                    "The entire process from browsing to delivery was seamless. The staff was knowledgeable " +
-                    "and helped me choose the right components for my build. The products arrived well-packaged " +
-                    "and in perfect condition. I highly recommend this store to anyone looking for quality PC parts " +
-                    "and excellent customer service. Their after-sales support is also top-notch, and they stand " +
-                    "behind their products with solid warranties.";
-                    
-                document.getElementById('review-full-text').textContent = fullText;
-
-                // Check if review is favorited
-                checkIfFavorited();
-            } else {
+            if (!review) {
                 showNotification('Review not found', 'Error', 'error');
-                setTimeout(() => {
-                    window.location.href = 'reviewtab.html';
-                }, 2000);
-            }
-        }
-
-        // Check if review is favorited
-        function checkIfFavorited() {
-            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
-            const isFavorited = favorites.includes(parseInt(reviewId));
-            
-            const favIcon = document.getElementById('fav-icon');
-            const favButton = favIcon.parentElement;
-            
-            if (isFavorited) {
-                favIcon.textContent = '♥';
-                favButton.innerHTML = '<span id="fav-icon">♥</span> REMOVE FROM FAVORITES';
-            }
-        }
-
-        // Toggle favorite
-        function toggleReviewFavorite() {
-            if (!requireLogin('favorite this review')) {
+                setTimeout(() => window.location.href = 'reviewtab.html', 1500);
                 return;
             }
-            
-            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
-            const reviewIdNum = parseInt(reviewId);
-            const index = favorites.indexOf(reviewIdNum);
-            
-            const favIcon = document.getElementById('fav-icon');
-            const favButton = favIcon.parentElement;
-            
-            if (index > -1) {
-                favorites.splice(index, 1);
-                favIcon.textContent = '♡';
-                favButton.innerHTML = '<span id="fav-icon">♡</span> ADD TO FAVORITES';
-                showNotification('Removed from favorites', 'Removed', 'warning');
-            } else {
-                favorites.push(reviewIdNum);
-                favIcon.textContent = '♥';
-                favButton.innerHTML = '<span id="fav-icon">♥</span> REMOVE FROM FAVORITES';
-                showNotification('Added to favorites!', 'Success', 'success');
-            }
-            
-            localStorage.setItem('techamuna_favorite_reviews', JSON.stringify(favorites));
+
+            document.getElementById('reviewer-name').textContent = review.username;
+            document.getElementById('review-date').textContent = review.date;
+
+            // Build stars from computed rating
+            const rating = review.rating || Math.round(((review.builderScores && (review.builderScores.pricing + review.builderScores.customerService + review.builderScores.afterSales)/3) || 5));
+            document.getElementById('review-stars').textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            document.getElementById('rating-text').textContent = `${rating}.0 out of 5`;
+
+            document.getElementById('store-name').textContent = review.storeName || 'PC Hub Manila';
+            document.getElementById('review-headline').textContent = review.headline || '';
+            document.getElementById('review-full-text').textContent = review.text || '';
+
+            // Show images
+            const imagesContainer = document.getElementById('review-images');
+            imagesContainer.innerHTML = '';
+            (review.media || []).forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                imagesContainer.appendChild(img);
+            });
+
+            // Show builder scores
+            const scoreText = `Pricing: ${(review.builderScores && review.builderScores.pricing) || '-'} • Customer Service: ${(review.builderScores && review.builderScores.customerService) || '-'} • After-Sales/Warranty: ${(review.builderScores && review.builderScores.afterSales) || '-'} `;
+            const existing = document.getElementById('rating-text');
+            existing.textContent = existing.textContent + ' · ' + scoreText;
+
+            // Add upvote and comment UI
+            renderActions(review);
         }
 
-        // View store
-        function viewStore() {
-            window.location.href = 'store-page.html';
+        function renderActions(review) {
+            // Add upvote / comment buttons to actions area
+            const actions = document.querySelector('.review-actions');
+            actions.innerHTML = '';
+
+            const upvoteBtn = document.createElement('button');
+            upvoteBtn.className = 'action-button primary';
+            upvoteBtn.textContent = `▲ Helpful (${review.upvotes || 0})`;
+            upvoteBtn.addEventListener('click', ()=>{
+                if (!requireLogin('upvote this review')) return;
+                const uid = getCurrentUser().id;
+                upvoteReview(review.id, uid);
+                loadReview();
+            });
+
+            const commentBtn = document.createElement('button');
+            commentBtn.className = 'action-button';
+            commentBtn.textContent = `💬 Comment (${(review.comments||[]).length})`;
+            commentBtn.addEventListener('click', ()=>{
+                if (!requireLogin('comment on this review')) return;
+                const text = prompt('Enter your comment');
+                if (text && text.trim()) {
+                    const current = getCurrentUser();
+                    addCommentToReview(review.id, { userId: current.id, username: current.username, text: text.trim() });
+                    showNotification('Comment added', 'Success', 'success');
+                    loadReview();
+                }
+            });
+
+            actions.appendChild(upvoteBtn);
+            actions.appendChild(commentBtn);
+
+            // If owner, show edit/delete
+            const current = getCurrentUser();
+            if (current && current.id === review.userId) {
+                const editBtn = document.createElement('button');
+                editBtn.className = 'action-button';
+                editBtn.textContent = 'Edit';
+                editBtn.addEventListener('click', ()=>{
+                    // Open edit flow by redirecting to reviewtab edit modal
+                    window.location.href = `reviewtab.html?edit=${review.id}`;
+                });
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'action-button';
+                delBtn.textContent = 'Delete';
+                delBtn.addEventListener('click', async ()=>{
+                    const confirmed = await showConfirmation('Delete this review?', 'Confirm Delete');
+                    if (confirmed) {
+                        deleteReview(review.id);
+                        showNotification('Review deleted', 'Deleted', 'warning');
+                        setTimeout(()=>window.location.href='reviewtab.html',800);
+                    }
+                });
+
+                actions.appendChild(editBtn);
+                actions.appendChild(delBtn);
+            }
+
+            // Render comments below actions
+            renderComments(review);
+        }
+
+        function renderComments(review) {
+            // remove existing comments section if any
+            let commentsSection = document.getElementById('comments-section');
+            if (commentsSection) commentsSection.remove();
+
+            commentsSection = document.createElement('div');
+            commentsSection.id = 'comments-section';
+            commentsSection.style.marginTop = '1.5rem';
+            commentsSection.innerHTML = '<h3>Comments</h3>';
+            (review.comments || []).forEach(c => {
+                const cEl = document.createElement('div');
+                cEl.style.borderTop = '1px solid #eee';
+                cEl.style.padding = '0.75rem 0';
+                cEl.innerHTML = `<strong>${c.username}</strong> <span style="color:#666;font-family:var(--font-mono);">• ${c.date}</span><div style="margin-top:6px;">${c.text}</div>`;
+                commentsSection.appendChild(cEl);
+            });
+
+            document.querySelector('.review-detail-card').appendChild(commentsSection);
         }
 
         // Load review on page load

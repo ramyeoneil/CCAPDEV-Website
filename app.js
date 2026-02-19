@@ -75,14 +75,126 @@ function initializeData() {
 
     if (!localStorage.getItem('techamuna_reviews')) {
         localStorage.setItem('techamuna_reviews', JSON.stringify([
-            { id: 1, storeId: 1, storeName: 'PC Hub Manila', userId: 2, username: 'johndoe123', rating: 5, headline: "Excellent service!", text: "Fast shipping and genuine products. Highly recommended!", date: "2026-02-15" },
-            { id: 2, storeId: 1, storeName: 'PC Hub Manila', userId: 2, username: 'janedoe456', rating: 4, headline: "Good prices", text: "Competitive pricing and helpful staff.", date: "2026-02-10" },
-            { id: 3, storeId: 1, storeName: 'TechZone QC', userId: 2, username: 'techguru99', rating: 5, headline: "Outstanding customer service", text: "The team helped me build my dream gaming rig. Very patient with all my questions.", date: "2026-02-05" },
-            { id: 4, storeId: 1, storeName: 'GamersParadise', userId: 2, username: 'gamer2026', rating: 5, headline: "Best PC store in Manila", text: "Wide selection of components and accessories. Great prices!", date: "2026-02-01" },
-            { id: 5, storeId: 1, storeName: 'ByteShop', userId: 2, username: 'builder_ph', rating: 4, headline: "Good experience overall", text: "Staff was knowledgeable. Only minor issue was parking.", date: "2026-01-28" },
-            { id: 6, storeId: 1, storeName: 'Silicon Valley PH', userId: 2, username: 'pcmaster', rating: 5, headline: "Genuine products", text: "All products come with proper warranty. Very reliable!", date: "2026-01-25" },
-            { id: 7, storeId: 1, storeName: 'Hardware Haven', userId: 2, username: 'reviewer123', rating: 4, headline: "Great customer support", text: "They answered all my questions patiently.", date: "2026-01-20" },
-            { id: 8, storeId: 1, storeName: 'PC Hub Manila', userId: 2, username: 'techie2026', rating: 5, headline: "Fast delivery", text: "Ordered on Monday, received on Wednesday. Excellent!", date: "2026-01-15" }
+            {
+                id: 1,
+                storeId: 1,
+                storeName: 'PC Hub Manila',
+                userId: 2,
+                username: 'johndoe123',
+                rating: 5,
+                headline: "Excellent service!",
+                text: "Fast shipping and genuine products. Highly recommended!",
+                date: "2026-02-15",
+                upvotes: 12,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 5, customerService: 5, afterSales: 5 }
+            },
+            {
+                id: 2,
+                storeId: 1,
+                storeName: 'PC Hub Manila',
+                userId: 2,
+                username: 'janedoe456',
+                rating: 4,
+                headline: "Good prices",
+                text: "Competitive pricing and helpful staff.",
+                date: "2026-02-10",
+                upvotes: 5,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 4, customerService: 4, afterSales: 4 }
+            },
+            {
+                id: 3,
+                storeId: 1,
+                storeName: 'TechZone QC',
+                userId: 2,
+                username: 'techguru99',
+                rating: 5,
+                headline: "Outstanding customer service",
+                text: "The team helped me build my dream gaming rig. Very patient with all my questions.",
+                date: "2026-02-05",
+                upvotes: 8,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 4, customerService: 5, afterSales: 5 }
+            },
+            {
+                id: 4,
+                storeId: 1,
+                storeName: 'GamersParadise',
+                userId: 2,
+                username: 'gamer2026',
+                rating: 5,
+                headline: "Best PC store in Manila",
+                text: "Wide selection of components and accessories. Great prices!",
+                date: "2026-02-01",
+                upvotes: 4,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 5, customerService: 4, afterSales: 4 }
+            },
+            {
+                id: 5,
+                storeId: 1,
+                storeName: 'ByteShop',
+                userId: 2,
+                username: 'builder_ph',
+                rating: 4,
+                headline: "Good experience overall",
+                text: "Staff was knowledgeable. Only minor issue was parking.",
+                date: "2026-01-28",
+                upvotes: 3,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 4, customerService: 4, afterSales: 3 }
+            },
+            {
+                id: 6,
+                storeId: 1,
+                storeName: 'Silicon Valley PH',
+                userId: 2,
+                username: 'pcmaster',
+                rating: 5,
+                headline: "Genuine products",
+                text: "All products come with proper warranty. Very reliable!",
+                date: "2026-01-25",
+                upvotes: 7,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 4, customerService: 5, afterSales: 5 }
+            },
+            {
+                id: 7,
+                storeId: 1,
+                storeName: 'Hardware Haven',
+                userId: 2,
+                username: 'reviewer123',
+                rating: 4,
+                headline: "Great customer support",
+                text: "They answered all my questions patiently.",
+                date: "2026-01-20",
+                upvotes: 2,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 4, customerService: 4, afterSales: 4 }
+            },
+            {
+                id: 8,
+                storeId: 1,
+                storeName: 'PC Hub Manila',
+                userId: 2,
+                username: 'techie2026',
+                rating: 5,
+                headline: "Fast delivery",
+                text: "Ordered on Monday, received on Wednesday. Excellent!",
+                date: "2026-01-15",
+                upvotes: 6,
+                comments: [],
+                media: [],
+                builderScores: { pricing: 5, customerService: 5, afterSales: 5 }
+            }
         ]));
     }
 
@@ -209,6 +321,109 @@ function getAllReviews() {
 function saveReviews(reviews) {
     localStorage.setItem('techamuna_reviews', JSON.stringify(reviews));
 }
+
+// Utility: next review id
+function getNextReviewId() {
+    const reviews = getAllReviews();
+    return reviews.length ? Math.max(...reviews.map(r => r.id)) + 1 : 1;
+}
+
+// Add a new review
+function addReview(review) {
+    const reviews = getAllReviews();
+    const newReview = {
+        id: getNextReviewId(),
+        date: new Date().toISOString().split('T')[0],
+        upvotes: 0,
+        comments: [],
+        media: [],
+        builderScores: { pricing: review.pricing || 0, customerService: review.customerService || 0, afterSales: review.afterSales || 0 },
+        ...review
+    };
+    // compute aggregate rating if not provided
+    if (!newReview.rating) {
+        const scores = Object.values(newReview.builderScores || {});
+        newReview.rating = Math.round(scores.reduce((a,b)=>a+b,0) / (scores.length || 1));
+    }
+    reviews.unshift(newReview);
+    saveReviews(reviews);
+    return newReview;
+}
+
+// Update existing review by id (partial update)
+function updateReview(id, patch) {
+    const reviews = getAllReviews();
+    const idx = reviews.findIndex(r => r.id === id);
+    if (idx === -1) return null;
+    reviews[idx] = { ...reviews[idx], ...patch };
+    // if builderScores changed, recalc rating
+    if (patch.builderScores) {
+        const scores = Object.values(reviews[idx].builderScores);
+        reviews[idx].rating = Math.round(scores.reduce((a,b)=>a+b,0) / (scores.length || 1));
+    }
+    saveReviews(reviews);
+    return reviews[idx];
+}
+
+// Delete review
+function deleteReview(id) {
+    let reviews = getAllReviews();
+    reviews = reviews.filter(r => r.id !== id);
+    saveReviews(reviews);
+}
+
+// Upvote a review (one upvote per user stored locally)
+function upvoteReview(reviewId, userId) {
+    const reviews = getAllReviews();
+    const idx = reviews.findIndex(r => r.id === reviewId);
+    if (idx === -1) return null;
+    // track user upvotes in localStorage map
+    const key = 'techamuna_review_upvotes';
+    const map = JSON.parse(localStorage.getItem(key) || '{}');
+    map[reviewId] = map[reviewId] || [];
+    if (map[reviewId].includes(userId)) return reviews[idx]; // already upvoted
+    map[reviewId].push(userId);
+    localStorage.setItem(key, JSON.stringify(map));
+    reviews[idx].upvotes = (reviews[idx].upvotes || 0) + 1;
+    saveReviews(reviews);
+    return reviews[idx];
+}
+
+// Add comment to review
+function addCommentToReview(reviewId, comment) {
+    const reviews = getAllReviews();
+    const idx = reviews.findIndex(r => r.id === reviewId);
+    if (idx === -1) return null;
+    const commentObj = {
+        id: Date.now(),
+        userId: comment.userId,
+        username: comment.username,
+        text: comment.text,
+        date: new Date().toISOString().split('T')[0]
+    };
+    reviews[idx].comments = reviews[idx].comments || [];
+    reviews[idx].comments.push(commentObj);
+    saveReviews(reviews);
+    return commentObj;
+}
+
+// Helper: convert File to dataURL (for small images)
+function fileToDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// Expose review helpers globally
+window.addReview = addReview;
+window.updateReview = updateReview;
+window.deleteReview = deleteReview;
+window.upvoteReview = upvoteReview;
+window.addCommentToReview = addCommentToReview;
+window.fileToDataURL = fileToDataURL;
 
 // Get community posts
 function getCommunityPosts() {
