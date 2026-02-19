@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Write a Review | Tech-A-Muna</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .container { max-width:1000px;margin:2rem auto;padding:0 1rem; }
+        .review-form-card { background:var(--white);border:3px solid var(--primary-green);border-radius:12px;padding:2rem;box-shadow:0 10px 30px rgba(0,112,60,0.08); }
+        .form-row{ display:flex;gap:0.75rem;align-items:center;margin-bottom:0.75rem; }
+        .form-row.full{ display:block; }
+        input[type=text], textarea, select { width:100%;padding:0.7rem;border:1px solid #ddd;border-radius:8px;font-family:var(--font-mono); }
+        textarea{ min-height:140px; }
+        .images-preview { display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap; }
+        .images-preview img{ width:120px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #e6f2ee; }
+        .actions { display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1rem; }
+        .action-btn { padding:0.7rem 1rem;border-radius:8px;border:2px solid var(--primary-green);background:transparent;color:var(--primary-green);cursor:pointer;font-weight:700; }
+        .action-btn.primary{ background:var(--primary-green); color:#fff; border-color:var(--primary-green); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container"><img src="logo-white.svg" alt="Tech-A-Muna Logo" class="logo-image"></div>
+            <div class="search-container"><input class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS"></div>
+            <div class="header-actions"></div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="discover.html" class="nav-link">DISCOVER</a>
+        <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
+        <a href="community.html" class="nav-link">COMMUNITY</a>
+        <a href="#" class="nav-link">HELP</a>
+    </nav>
+
+    <main class="container">
+        <div class="review-form-card">
+            <h2 style="color:var(--primary-green);margin-bottom:0.5rem;">Write a Review</h2>
+            <p style="color:#666;font-family:var(--font-mono);margin-bottom:1rem;">Provide a detailed review and PC Builder's Score across Pricing, Customer Service, and After-Sales/Warranty. Attach images if available.</p>
+
+            <form id="make-review-form">
+                <div class="form-row full">
+                    <input type="text" id="store-name" placeholder="Store name (required)" required>
+                </div>
+
+                <div class="form-row full">
+                    <input type="text" id="headline" placeholder="Headline (e.g., Great customer support)" required>
+                </div>
+
+                <div class="form-row full">
+                    <textarea id="review-text" placeholder="Write your detailed review here..." required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label style="min-width:120px;">Pricing</label>
+                    <select id="score-pricing"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                    <label style="min-width:140px;margin-left:12px;">Customer Service</label>
+                    <select id="score-cs"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                    <label style="min-width:140px;margin-left:12px;">After-Sales/Warranty</label>
+                    <select id="score-after"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+                </div>
+
+                <div class="form-row full">
+                    <label>Upload images (optional)</label>
+                    <input type="file" id="review-images" accept="image/*" multiple>
+                    <div class="images-preview" id="images-preview"></div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="action-btn" onclick="window.location.href='reviewtab.html'">Cancel</button>
+                    <button type="submit" class="action-btn primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="custom-footer" style="margin-top:2rem;">
+        <div class="footer-container">
+            <div class="footer-left"><div class="footer-logo"><img src="logo-green.svg" alt="Tech-A-Muna Logo" class="logo-image"></div><a href="contact-page.html" class="footer-btn">CONTACT US</a></div>
+            <div class="footer-divider"></div>
+            <div class="footer-right"><ul><li><a href="about-page.html">ABOUT</a></li><li><a href="privacy-page.html">PRIVACY</a></li><li><a href="terms-page.html">TERMS</a></li></ul></div>
+        </div>
+        <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Header update
+        updateHeader();
+        makeLogoClickable();
+
+        // Image preview and conversion
+        const imagesInput = document.getElementById('review-images');
+        const previewContainer = document.getElementById('images-preview');
+        let editingId = null;
+
+        // If editing via ?edit=ID, prefill
+        (function handleEditPrefill(){
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('edit')) return;
+            const rid = parseInt(params.get('edit'));
+            if (isNaN(rid)) return;
+            const reviews = getAllReviews();
+            const r = reviews.find(x => x.id === rid);
+            if (!r) return;
+            const current = getCurrentUser();
+            if (!current || current.id !== r.userId) {
+                showNotification('Not authorized to edit this review', 'Error', 'error');
+                setTimeout(()=> window.location.href='reviewtab.html',800);
+                return;
+            }
+            editingId = rid;
+            document.getElementById('store-name').value = r.storeName || '';
+            document.getElementById('headline').value = r.headline || '';
+            document.getElementById('review-text').value = r.text || '';
+            document.getElementById('score-pricing').value = (r.builderScores && r.builderScores.pricing) || 5;
+            document.getElementById('score-cs').value = (r.builderScores && r.builderScores.customerService) || 5;
+            document.getElementById('score-after').value = (r.builderScores && r.builderScores.afterSales) || 5;
+            previewContainer.innerHTML = '';
+            (r.media || []).forEach(m => { const img = document.createElement('img'); img.src = m; previewContainer.appendChild(img); });
+        })();
+
+        imagesInput.addEventListener('change', async (e) => {
+            previewContainer.innerHTML = '';
+            const files = Array.from(e.target.files || []).slice(0,6);
+            for (const f of files) {
+                try {
+                    const data = await fileToDataURL(f);
+                    const img = document.createElement('img'); img.src = data; previewContainer.appendChild(img);
+                } catch(err) { console.error(err); }
+            }
+        });
+
+        document.getElementById('make-review-form').addEventListener('submit', async (ev) => {
+            ev.preventDefault();
+            if (!requireLogin('post a review')) return;
+            const current = getCurrentUser();
+            const storeName = document.getElementById('store-name').value.trim();
+            const headline = document.getElementById('headline').value.trim();
+            const text = document.getElementById('review-text').value.trim();
+            const pricing = parseInt(document.getElementById('score-pricing').value);
+            const cs = parseInt(document.getElementById('score-cs').value);
+            const after = parseInt(document.getElementById('score-after').value);
+
+            // Convert files to data URLs
+            const files = Array.from(document.getElementById('review-images').files || []).slice(0,6);
+            const media = [];
+            for (const f of files) {
+                try { media.push(await fileToDataURL(f)); } catch(e) { console.error(e); }
+            }
+
+            if (editingId) {
+                const updated = updateReview(editingId, { storeName, headline, text, media, builderScores:{ pricing, customerService: cs, afterSales: after } });
+                if (updated) {
+                    showNotification('Review updated', 'Updated', 'success');
+                    setTimeout(()=> window.location.href = `review-detail.html?id=${editingId}`, 800);
+                    return;
+                } else {
+                    showNotification('Unable to update review', 'Error', 'error');
+                    return;
+                }
+            }
+
+            const newReview = addReview({ storeName, headline, text, media, builderScores:{ pricing, customerService: cs, afterSales: after }, userId: current.id, username: current.username });
+            showNotification('Review posted', 'Success', 'success');
+            // Redirect to review detail if available
+            if (newReview && newReview.id) {
+                setTimeout(()=> window.location.href = `review-detail.html?id=${newReview.id}`, 800);
+            } else {
+                setTimeout(()=> window.location.href = 'reviewtab.html', 800);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -45,7 +45,7 @@
                 <label style="display:flex;align-items:center;gap:0.25rem;margin-left:0.5rem;">
                     <input type="checkbox" id="warranty-watch"> Warranty Watch
                 </label>
-                <button id="create-review-btn" class="header-btn" style="margin-left:0.5rem;">Write a Review</button>
+                <button id="create-review-btn" class="header-btn" style="margin-left:0.5rem;" onclick="window.location.href='make-review.html'">Write a Review</button>
             </div>
         </div>
 
@@ -56,58 +56,7 @@
         </div>
     </main>
 
-    <!-- Review Modal -->
-    <div id="review-modal" class="center-modal">
-        <div class="center-modal-content">
-            <h2 id="modal-title">Write a Review</h2>
-            <form id="review-form">
-                <input type="hidden" id="review-id">
-                <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem;">
-                    <input id="store-name" placeholder="Store name" required style="flex:1;padding:0.6rem;border:1px solid #ddd;border-radius:6px;">
-                </div>
-                <input id="headline" placeholder="Headline" required style="width:100%;padding:0.6rem;border:1px solid #ddd;border-radius:6px;margin-bottom:0.5rem;">
-                <textarea id="review-text" placeholder="Write your detailed review here" rows="5" style="width:100%;padding:0.6rem;border:1px solid #ddd;border-radius:6px;margin-bottom:0.5rem;" required></textarea>
-
-                <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem;">
-                    <label>Pricing:</label>
-                    <select id="score-pricing">
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                    </select>
-                    <label>Customer Service:</label>
-                    <select id="score-cs">
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                    </select>
-                    <label>After-Sales/Warranty:</label>
-                    <select id="score-after">
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                    </select>
-                </div>
-
-                <div style="margin-bottom:0.5rem;">
-                    <label>Upload images (optional):</label>
-                    <input type="file" id="review-images-input" accept="image/*" multiple>
-                    <div id="image-previews" style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap;"></div>
-                </div>
-
-                <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.75rem;">
-                    <button type="button" class="modal-btn cancel" onclick="closeReviewModal()">Cancel</button>
-                    <button type="submit" class="modal-btn confirm">Submit Review</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Review creation moved to make-review.html; modal removed -->
     <footer class="custom-footer">
         <div class="footer-container">
 
@@ -242,113 +191,25 @@
             });
         }
 
-        // Modal helpers
-        function openReviewModal() {
-            document.getElementById('review-modal').classList.add('show');
-        }
-        function closeReviewModal() {
-            document.getElementById('review-modal').classList.remove('show');
-            document.getElementById('review-form').reset();
-            document.getElementById('image-previews').innerHTML = '';
-            document.getElementById('review-id').value = '';
-            document.getElementById('modal-title').textContent = 'Write a Review';
-        }
-
-        // Handle image preview and conversion
-        document.getElementById('review-images-input').addEventListener('change', async (e) => {
-            const previews = document.getElementById('image-previews');
-            previews.innerHTML = '';
-            const files = Array.from(e.target.files || []);
-            for (const f of files.slice(0,6)) {
-                try {
-                    const data = await fileToDataURL(f);
-                    const img = document.createElement('img');
-                    img.src = data;
-                    img.style.width = '100px';
-                    img.style.height = '70px';
-                    img.style.objectFit = 'cover';
-                    img.style.borderRadius = '6px';
-                    previews.appendChild(img);
-                } catch(err) {
-                    console.error(err);
-                }
-            }
-        });
-
-        // Submit review form
-        document.getElementById('review-form').addEventListener('submit', async (e)=>{
-            e.preventDefault();
-            if (!requireLogin('post a review')) return;
-            const current = getCurrentUser();
-            const idVal = document.getElementById('review-id').value;
-            const storeName = document.getElementById('store-name').value.trim();
-            const headline = document.getElementById('headline').value.trim();
-            const text = document.getElementById('review-text').value.trim();
-            const pricing = parseInt(document.getElementById('score-pricing').value);
-            const cs = parseInt(document.getElementById('score-cs').value);
-            const after = parseInt(document.getElementById('score-after').value);
-
-            // images
-            const files = Array.from(document.getElementById('review-images-input').files || []);
-            const media = [];
-            for (const f of files.slice(0,6)) {
-                try { media.push(await fileToDataURL(f)); } catch(e) { console.error(e); }
-            }
-
-            if (idVal) {
-                // edit
-                const rid = parseInt(idVal);
-                updateReview(rid, { headline, text, media, builderScores: { pricing, customerService: cs, afterSales: after } });
-                showNotification('Review updated', 'Updated', 'success');
-            } else {
-                addReview({ storeName, headline, text, media, builderScores: { pricing, customerService: cs, afterSales: after }, userId: current.id, username: current.username });
-                showNotification('Review posted', 'Success', 'success');
-            }
-
-            closeReviewModal();
-            renderReviews();
-        });
-
-        // Open edit modal
+        // Modal removed. 'Write a Review' and edit actions navigate to make-review.html
         function openEditModal(reviewId) {
             const reviews = getAllReviews();
             const r = reviews.find(x => x.id === reviewId);
             if (!r) return;
             if (!getCurrentUser() || getCurrentUser().id !== r.userId) { showNotification('Not authorized', 'Error', 'error'); return; }
-            document.getElementById('review-id').value = r.id;
-            document.getElementById('store-name').value = r.storeName || '';
-            document.getElementById('headline').value = r.headline || '';
-            document.getElementById('review-text').value = r.text || '';
-            document.getElementById('score-pricing').value = (r.builderScores && r.builderScores.pricing) || 5;
-            document.getElementById('score-cs').value = (r.builderScores && r.builderScores.customerService) || 5;
-            document.getElementById('score-after').value = (r.builderScores && r.builderScores.afterSales) || 5;
-            const previews = document.getElementById('image-previews');
-            previews.innerHTML = '';
-            (r.media || []).forEach(m => { const img = document.createElement('img'); img.src = m; img.style.width='100px'; img.style.height='70px'; img.style.objectFit='cover'; img.style.borderRadius='6px'; previews.appendChild(img); });
-            document.getElementById('modal-title').textContent = 'Edit Review';
-            openReviewModal();
+            // Redirect to the standalone make-review page with edit query
+            window.location.href = `make-review.html?edit=${reviewId}`;
         }
-
         // Wire controls
         document.getElementById('create-review-btn').addEventListener('click', ()=>{
             if (!requireLogin('write a review')) return;
-            openReviewModal();
+            window.location.href = 'make-review.html';
         });
         sortSelect.addEventListener('change', renderReviews);
         warrantyWatch.addEventListener('change', renderReviews);
 
-        // Close modal function exported for use in inline cancel button
-        window.closeReviewModal = closeReviewModal;
-
         // Initial render
         renderReviews();
-
-        // If URL includes ?edit=ID, open edit modal
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('edit')) {
-            const rid = parseInt(urlParams.get('edit'));
-            if (!isNaN(rid)) openEditModal(rid);
-        }
     </script>
 </body>
 </html>
