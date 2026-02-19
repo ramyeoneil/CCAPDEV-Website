@@ -122,6 +122,10 @@ function initializeData() {
             }
         ]));
     }
+    // After initializing sample data, compute builder identities from activity
+    if (typeof computeAllUsersIdentity === 'function') {
+        computeAllUsersIdentity();
+    }
 }
 
 // Get current logged in user
@@ -216,6 +220,55 @@ function saveCommunityPosts(posts) {
     localStorage.setItem('techamuna_community_posts', JSON.stringify(posts));
 }
 
+// Compute builder identity for a single user based on reviews and post likes
+function computeBuilderIdentity(user) {
+    if (!user || !user.id) return 'Novice';
+
+    const reviews = getAllReviews();
+    const posts = getCommunityPosts();
+
+    const reviewsCount = reviews.filter(r => r.userId === user.id).length;
+    const totalLikes = posts.filter(p => p.userId === user.id).reduce((s, p) => s + (p.likes || 0), 0);
+
+    // Rules (updated to make progression harder):
+    // - Veteran: >=25 reviews OR totalLikes >=500
+    // - Enthusiast: >=8 reviews OR totalLikes >=150
+    // - Novice: otherwise
+    let identity = 'Novice';
+    if (reviewsCount >= 25 || totalLikes >= 500) {
+        identity = 'Veteran';
+    } else if (reviewsCount >= 8 || totalLikes >= 150) {
+        identity = 'Enthusiast';
+    }
+
+    // Persist change if different
+    if (user.builderIdentity !== identity) {
+        user.builderIdentity = identity;
+        const users = getAllUsers();
+        const idx = users.findIndex(u => u.id === user.id);
+        if (idx !== -1) {
+            users[idx] = user;
+            saveUsers(users);
+            // if currently logged in user, update currentUser
+            const current = getCurrentUser();
+            if (current && current.id === user.id) setCurrentUser(user);
+        }
+    }
+
+    return identity;
+}
+
+// Compute identities for all users (useful at init)
+function computeAllUsersIdentity() {
+    const users = getAllUsers();
+    let changed = false;
+    users.forEach(u => {
+        const newId = computeBuilderIdentity(u);
+        if (u.builderIdentity !== newId) changed = true;
+    });
+    if (changed) saveUsers(users);
+}
+
 // Register new user
 function registerUser(userData) {
     const users = getAllUsers();
@@ -225,9 +278,14 @@ function registerUser(userData) {
         return { success: false, message: 'Email already registered' };
     }
     
-    // Create new user
+    // Create new user with profile defaults
     const newUser = {
         id: Math.max(...users.map(u => u.id), 0) + 1,
+        // defaults
+        profileImage: 'https://via.placeholder.com/150',
+        bio: '',
+        builderIdentity: userData.builderIdentity || 'Novice',
+        // provided data
         ...userData,
         dateJoined: new Date().toISOString().split('T')[0]
     };
@@ -249,8 +307,12 @@ function loginUser(email, password) {
             return { success: false, message: 'Your store application is pending approval' };
         }
         
-        setCurrentUser(user);
-        return { success: true, user: user };
+        // Recompute identity from activity and persist
+        computeBuilderIdentity(user);
+        // Reload updated user from storage (ensure we have persisted changes)
+        const refreshed = getAllUsers().find(u => u.id === user.id) || user;
+        setCurrentUser(refreshed);
+        return { success: true, user: refreshed };
     }
     
     return { success: false, message: 'Invalid email or password' };
@@ -292,10 +354,11 @@ function updateHeader() {
             dashboardLink = 'store-dashboard.html';
         }
         
+        const avatar = (user.profileImage) ? `<img src="${user.profileImage}" style="width:28px;height:28px;border-radius:50%;vertical-align:middle;margin-right:8px;object-fit:cover;">` : '';
         headerActions.innerHTML = `
             <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
             <button class="header-btn" onclick="window.location.href='favorites.html'">FAVS</button>
-            <button class="header-btn signup" onclick="window.location.href='${profilelink}'">${dashboardText.toUpperCase()}</button>
+            <button class="header-btn signup" onclick="window.location.href='${profilelink}'">${avatar}${dashboardText.toUpperCase()}</button>
             <button class="header-btn" onclick="logout()">LOGOUT</button>
         `;
     } else {

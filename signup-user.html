@@ -55,6 +55,7 @@
                     <input type="text" id="province" required>
                     <label>Postal Code</label>
                     <input type="text" id="postal" required>
+                    <!-- Builder identity is auto-assigned based on contribution -->
                 </div>
             </form>
             <button class="auth-btn" onclick="submitUserSignup()">ENTER</button>
@@ -102,7 +103,7 @@
                 return;
             }
             
-            const userData = {
+                const userData = {
                 type: 'user',
                 email: document.getElementById('email').value,
                 username: document.getElementById('username').value,
@@ -111,6 +112,7 @@
                 city: document.getElementById('city').value,
                 province: document.getElementById('province').value,
                 postalCode: document.getElementById('postal').value
+                    // builderIdentity will be calculated from activity
             };
             
             const result = registerUser(userData);

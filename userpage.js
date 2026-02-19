@@ -11,18 +11,26 @@ window.addEventListener("DOMContentLoaded", function () {
     saveBtn.addEventListener("click", saveProfile);
 });
 
-// Load profile from localStorage
+// Load profile from current user record
 function loadProfile() {
-    const name = localStorage.getItem("username") || "John Doe";
-    const bio = localStorage.getItem("userBio") || "PC enthusiast and reviewer.";
-    const image = localStorage.getItem("profileImage") || "https://via.placeholder.com/150";
+    if (!requireLogin('view profile')) return;
 
-    document.getElementById("displayName").innerText = name;
-    document.getElementById("displayBio").innerText = bio;
-    document.getElementById("profileImage").src = image;
+    const user = getCurrentUser();
+    if (!user) return;
 
-    document.getElementById("editName").value = name;
-    document.getElementById("editBio").value = bio;
+    const name = user.username || user.storeName || 'John Doe';
+    const bio = user.bio || 'PC enthusiast and reviewer.';
+    const image = user.profileImage || 'https://via.placeholder.com/150';
+    const identity = user.builderIdentity || 'Novice';
+
+    document.getElementById('displayName').innerText = name;
+    document.getElementById('displayBio').innerText = bio;
+    document.getElementById('profileImage').src = image;
+    const identityEl = document.getElementById('displayIdentity');
+    if (identityEl) identityEl.innerText = identity;
+
+    document.getElementById('editName').value = name;
+    document.getElementById('editBio').value = bio;
 }
 
 // Toggle edit form visibility
@@ -33,23 +41,54 @@ function toggleEdit() {
 
 // Save profile to localStorage
 function saveProfile() {
-    const name = document.getElementById("editName").value;
-    const bio = document.getElementById("editBio").value;
+    if (!requireLogin('edit your profile')) return;
 
-    localStorage.setItem("username", name);
-    localStorage.setItem("userBio", bio);
+    const name = document.getElementById('editName').value;
+    const bio = document.getElementById('editBio').value;
+    const user = getCurrentUser();
+    if (!user) return;
 
-    alert("Profile updated!");
+    // Update user object - do NOT allow manual identity changes
+    user.username = name;
+    user.bio = bio;
+
+    // Persist to users list
+    const users = getAllUsers();
+    const idx = users.findIndex(u => u.id === user.id);
+    if (idx !== -1) {
+        users[idx] = user;
+        saveUsers(users);
+        setCurrentUser(user);
+    }
+
+    showNotification('Profile updated!', 'Saved', 'success');
     loadProfile();
     toggleEdit();
+    updateHeader();
 }
 
 // Handle image upload
 function handleImageUpload(event) {
     const reader = new FileReader();
     reader.onload = function () {
-        document.getElementById("profileImage").src = reader.result;
-        localStorage.setItem("profileImage", reader.result);
+        const dataUrl = reader.result;
+        document.getElementById('profileImage').src = dataUrl;
+
+        // Save to current user and users array
+        const user = getCurrentUser();
+        if (user) {
+            user.profileImage = dataUrl;
+            const users = getAllUsers();
+            const idx = users.findIndex(u => u.id === user.id);
+            if (idx !== -1) {
+                users[idx] = user;
+                saveUsers(users);
+                setCurrentUser(user);
+                updateHeader();
+            }
+        } else {
+            localStorage.setItem('profileImage', dataUrl);
+        }
     };
     reader.readAsDataURL(event.target.files[0]);
 }
