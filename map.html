@@ -9,61 +9,59 @@
             rel="stylesheet" 
             href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- Marker cluster CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
     </head>
     <body>
-        <div class="map-page">
-            <div class="store-list">
-
-                <div class="store-item" data-lat="14.5995" data-lng="120.9842">
-                    <h3>PC Store Name</h3>
-                    <div class="store-rating">★★★★★ <span>(6767)</span></div>
-                    <p>Address: Barangay, Street, Building, City</p>
-                    <span class="open">Open • Closes 10 PM</span>
+       <header class="header">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="logo-white.svg" alt="Tech-A-Muna Logo" class="logo-image">
                 </div>
-
-                <div class="store-item" data-lat="14.6091" data-lng="121.0223">
-                    <h3>PC Store Name</h3>
-                    <div class="store-rating">★★★★☆ <span>(1234)</span></div>
-                    <p>Address: Barangay, Street, Building, City</p>
-                    <span class="closed">Closed • Opens 8 AM</span>
+                <div class="header-actions">
+                    <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                    <button class="header-btn">FAVS</button>
+                    <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
                 </div>
-
-                <div class="store-item" data-lat="14.5547" data-lng="121.0244">
-                    <h3>PC Store Name</h3>
-                    <div class="store-rating">★★★★★ <span>(1020)</span></div>
-                    <p>Address: Barangay, Street, Building, City</p>
-                    <span class="open">Open • Closes 7 PM</span>
-                </div>
-
             </div>
+        </header>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">HOME</a>
+            <a href="discover.html" class="nav-link">DISCOVER</a>
+            <a href="reviewtab.html" class="nav-link">REVIEWS</a>
+            <a href="community.html" class="nav-link">COMMUNITY</a>
+            <a href="#" class="nav-link">HELP</a>
+        </nav>
+
+        <div class="map-page">
+            <div class="map-controls">
+                <div style="position:relative; width:100%; max-width:640px;">
+                    <input id="mapSearch" class="map-search" placeholder="Search stores by name..." aria-label="Search stores">
+                    <div id="autocompleteList" class="autocomplete-list" aria-hidden="true"></div>
+                </div>
+                <button id="locateBtn" class="map-btn">Show my location</button>
+            </div>
+
             <div id="map"></div>
 
+            <!-- Hidden store data (static list). You can replace or extend this in JS -->
+            <template id="stores-data">
+                [
+                    {"id":1,"name":"PC Hub Manila","lat":14.5995,"lng":120.9842,"address":"Makati City","rating":"★★★★★","hours":"9am - 8pm","img":"https://via.placeholder.com/120x80/00703c/ffffff?text=PC+Hub"},
+                    {"id":2,"name":"Gamer's Den","lat":14.6100,"lng":120.9900,"address":"Mandaluyong","rating":"★★★★☆","hours":"10am - 9pm","img":"https://via.placeholder.com/120x80/00703c/ffffff?text=Gamer%27s"},
+                    {"id":3,"name":"BuildLab","lat":14.5850,"lng":120.9750,"address":"Pasay","rating":"★★★★★","hours":"8am - 7pm","img":"https://via.placeholder.com/120x80/00703c/ffffff?text=BuildLab"}
+                ]
+            </template>
         </div>
 
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-        <script>
-            const map = L.map('map').setView([14.5995, 120.9842], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-
-            const storeItems = document.querySelectorAll('.store-item');
-
-            storeItems.forEach(store => {
-                const lat = store.dataset.lat;
-                const lng = store.dataset.lng;
-                const name = store.querySelector('h3').innerText;
-
-                const marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup(`<b>${name}</b>`);
-
-                store.addEventListener('click', () => {
-                    map.setView([lat, lng], 16);
-                    marker.openPopup();
-                });
-            });
-        </script>
+        <!-- Marker cluster JS -->
+        <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+        <script src="map.js"></script>
     </body>
 </html>

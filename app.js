@@ -293,7 +293,7 @@ function updateHeader() {
         }
         
         headerActions.innerHTML = `
-            <button class="header-btn">MAP</button>
+            <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
             <button class="header-btn" onclick="window.location.href='favorites.html'">FAVS</button>
             <button class="header-btn signup" onclick="window.location.href='${profilelink}'">${dashboardText.toUpperCase()}</button>
             <button class="header-btn" onclick="logout()">LOGOUT</button>
@@ -301,7 +301,7 @@ function updateHeader() {
     } else {
         // Not logged in
         headerActions.innerHTML = `
-            <button class="header-btn">MAP</button>
+            <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
             <button class="header-btn" onclick="checkLoginForFavorites()">FAVS</button>
             <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
         `;

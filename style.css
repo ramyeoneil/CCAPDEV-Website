@@ -167,6 +167,41 @@ body {
     100% { opacity: 1; }
 }
 
+/* Map page styles */
+.map-page {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    flex: 1;
+    width: 100%;
+}
+.map-controls { display:flex; gap:0.75rem; align-items:center; justify-content:center; margin:0.75rem 0; }
+.map-search { padding: 0.7rem 1rem; border-radius: 999px; border: 2px solid var(--light-gray); width: 100%; }
+.map-btn { padding: 0.6rem 0.9rem; border-radius:8px; border: none; background: var(--primary-green); color: #fff; cursor:pointer; }
+
+.popup-card { display:flex; gap:0.6rem; align-items:flex-start; }
+.popup-img { width:100px; height:64px; object-fit:cover; border-radius:6px; border:1px solid #eee; }
+.popup-body { font-size:0.9rem; }
+.popup-link { color: var(--primary-green); font-weight:600; text-decoration:none; }
+.popup-link:hover { text-decoration:underline; }
+
+/* make the map fill available space beneath header/nav */
+#map { flex: 1; min-height: 0; height: auto; border-radius: 12px; overflow: hidden; }
+
+/* Autocomplete list */
+.autocomplete-list { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--light-gray); box-shadow: 0 6px 20px rgba(0,0,0,0.08); border-radius: 8px; z-index: 60; max-height: 220px; overflow:auto; display:none; }
+.autocomplete-item { padding: 0.6rem 0.9rem; cursor: pointer; font-size: 0.95rem; }
+.autocomplete-item:hover, .autocomplete-item.active { background: #f3fff3; }
+
+/* small thumbnail marker style (Leaflet icon image) */
+.store-marker-icon img, .store-marker-icon { border-radius: 6px; }
+
+/* highlight inside autocomplete */
+.autocomplete-item mark { background: #fff5b1; color: inherit; padding: 0 2px; border-radius: 2px; }
+
 /* Verified stores continuous carousel */
 .verified-carousel {
     overflow: hidden;
