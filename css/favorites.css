@@ -1,0 +1,8 @@
+.featured-stores{margin-bottom:4rem}
+.favorites-heading{font-size:1.2rem;color:var(--primary-green);letter-spacing:2px;margin-bottom:1rem}
+.no-favorite{display:none;text-align:center;padding:3rem;color:#666;font-family:var(--font-mono)}
+.no-favorite.show{display:block}
+.fav-remove-wrap{position:absolute;top:10px;right:10px}
+.fav-remove{background:white;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:1.25rem}
+.fav-name{padding:1rem;font-family:var(--font-mono);font-weight:600;color:var(--primary-green)}
+.store-card{position:relative}
