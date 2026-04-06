@@ -4,227 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-A-Muna | Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        .admin-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 3rem;
-        }
-
-        .admin-header {
-            background: var(--primary-green);
-            color: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-
-        .admin-header h1 {
-            font-size: 2rem;
-            letter-spacing: 3px;
-            margin-bottom: 0.5rem;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--light-gray);
-        }
-
-        .admin-tab {
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 0.95rem;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .admin-tab.active {
-            color: var(--primary-green);
-            border-bottom-color: var(--primary-green);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .data-table {
-            width: 100%;
-            background: var(--white);
-            border: 2px solid var(--light-gray);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .data-table table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            background: var(--primary-green);
-            color: var(--white);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .data-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 6px;
-            font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            margin-right: 0.5rem;
-        }
-
-        .btn-approve {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .btn-reject {
-            background: #dc3545;
-            color: var(--white);
-        }
-
-        .btn-edit {
-            background: #ffc107;
-            color: var(--black);
-        }
-
-        .btn-delete {
-            background: #dc3545;
-            color: var(--white);
-        }
-
-        .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .status-pending {
-            background: #ffc107;
-            color: var(--black);
-        }
-
-        .status-approved {
-            background: var(--primary-green);
-            color: var(--white);
-        }
-
-        .status-rejected {
-            background: #dc3545;
-            color: var(--white);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            font-size: 1.5rem;
-            color: var(--primary-green);
-            letter-spacing: 2px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--black);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.7rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-        }
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-    </style>
+    <link rel="stylesheet" href="css/admin-dashboard.css">
 </head>
 <body>
     <header class="header">
@@ -236,7 +20,7 @@
                 <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                <button class="header-btn" data-href="map.html">MAP</button>
                 <button class="header-btn">FAVS</button>
                 <button class="header-btn signup">ADMIN</button>
             </div>
@@ -250,14 +34,40 @@
         </div>
 
         <div class="admin-tabs">
-            <button class="admin-tab active" onclick="switchTab('stores')">PENDING STORES</button>
-            <button class="admin-tab" onclick="switchTab('users')">USERS</button>
-            <button class="admin-tab" onclick="switchTab('reviews')">REVIEWS</button>
-            <button class="admin-tab" onclick="switchTab('all-stores')">ALL STORES</button>
+            <button class="admin-tab active" onclick="switchTab('overview', this)">OVERVIEW</button>
+            <button class="admin-tab" onclick="switchTab('stores', this)">PENDING STORES</button>
+            <button class="admin-tab" onclick="switchTab('users', this)">USERS</button>
+            <button class="admin-tab" onclick="switchTab('reviews', this)">REVIEWS</button>
+            <button class="admin-tab" onclick="switchTab('all-stores', this)">ALL STORES</button>
+        </div>
+
+        <!-- NEW: Overview Tab -->
+        <div id="overview-tab" class="tab-content active">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-number" id="stat-users">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Approved Stores</h3>
+                    <div class="stat-number" id="stat-stores">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Approvals</h3>
+                    <div class="stat-number" id="stat-pending">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Reviews</h3>
+                    <div class="stat-number" id="stat-reviews">0</div>
+                </div>
+            </div>
         </div>
 
         <!-- Pending Stores Tab -->
-        <div id="stores-tab" class="tab-content active">
+        <div id="stores-tab" class="tab-content">
+            <div class="table-controls">
+                <input type="text" class="table-search" id="search-pending" placeholder="Search pending stores..." onkeyup="filterTable('pending-stores-table', this.value)">
+            </div>
             <div class="data-table">
                 <table>
                     <thead>
@@ -279,6 +89,9 @@
 
         <!-- Users Tab -->
         <div id="users-tab" class="tab-content">
+            <div class="table-controls">
+                <input type="text" class="table-search" id="search-users" placeholder="Search users by name or email..." onkeyup="filterTable('users-table', this.value)">
+            </div>
             <div class="data-table">
                 <table>
                     <thead>
@@ -300,6 +113,9 @@
 
         <!-- Reviews Tab -->
         <div id="reviews-tab" class="tab-content">
+            <div class="table-controls">
+                <input type="text" class="table-search" id="search-reviews" placeholder="Search reviews..." onkeyup="filterTable('reviews-table', this.value)">
+            </div>
             <div class="data-table">
                 <table>
                     <thead>
@@ -321,6 +137,9 @@
 
         <!-- All Stores Tab -->
         <div id="all-stores-tab" class="tab-content">
+            <div class="table-controls">
+                <input type="text" class="table-search" id="search-all-stores" placeholder="Search approved stores..." onkeyup="filterTable('all-stores-table', this.value)">
+            </div>
             <div class="data-table">
                 <table>
                     <thead>
@@ -347,7 +166,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>EDIT STORE</h2>
-                <button class="close-btn" onclick="closeModal('edit-store-modal')">&times;</button>
+                <button class="close-btn" data-action="closeModal" onclick="closeModal('edit-store-modal')">&times;</button>
             </div>
             <form id="edit-store-form">
                 <div class="form-group">
@@ -374,7 +193,7 @@
                         <option value="rejected">Rejected</option>
                     </select>
                 </div>
-                <button type="submit" class="auth-btn">SAVE CHANGES</button>
+                <button type="submit" class="action-btn btn-approve" style="width:100%; padding: 1rem; font-size: 1rem;">SAVE CHANGES</button>
             </form>
         </div>
     </div>
@@ -384,7 +203,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>EDIT USER</h2>
-                <button class="close-btn" onclick="closeModal('edit-user-modal')">&times;</button>
+                <button class="close-btn" data-action="closeModal" onclick="closeModal('edit-user-modal')">&times;</button>
             </div>
             <form id="edit-user-form">
                 <div class="form-group">
@@ -399,7 +218,7 @@
                     <label>Address</label>
                     <textarea id="edit-user-address"></textarea>
                 </div>
-                <button type="submit" class="auth-btn">SAVE CHANGES</button>
+                <button type="submit" class="action-btn btn-approve" style="width:100%; padding: 1rem; font-size: 1rem;">SAVE CHANGES</button>
             </form>
         </div>
     </div>
@@ -430,9 +249,7 @@
         <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
     </footer>
 
-    <script src="admin-dashboard.js"></script>
-    <script src="app.js"></script>
-    <script> updateHeader()</script>
-
+    <script src="js/app.js"></script>
+    <script src="js/admin-dashboard.js"></script>
 </body>
 </html>

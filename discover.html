@@ -4,150 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-A-Muna | Discover</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        .discover-page {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem;
-            min-height: calc(100vh - 400px);
-        }
-
-        .discover-filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-tag {
-            padding: 0.7rem 1.5rem;
-            background: var(--white);
-            border: 2px solid var(--light-gray);
-            border-radius: 25px;
-            font-family: var(--font-display);
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-tag.active {
-            background: var(--primary-green);
-            color: var(--white);
-            border-color: var(--primary-green);
-        }
-
-        .discover-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .discover-card {
-            background: var(--white);
-            border: 3px solid var(--light-gray);
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .discover-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 112, 60, 0.2);
-            border-color: var(--primary-green);
-        }
-
-        .discover-store-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background: var(--light-gray);
-        }
-
-        .discover-card-content {
-            padding: 1.8rem;
-        }
-
-        .discover-store-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            letter-spacing: 1.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .discover-store-location {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .discover-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 1.2rem;
-        }
-
-        .discover-stars {
-            color: var(--primary-green);
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
-
-        .discover-rating-text {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        .discover-reviews-preview {
-            border-top: 2px solid var(--light-gray);
-            padding-top: 1.2rem;
-        }
-
-        .discover-reviews-header {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
-        .discover-review-snippet {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.8rem;
-        }
-
-        .discover-review-snippet:last-child {
-            margin-bottom: 0;
-        }
-
-        .discover-review-user {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 0.3rem;
-        }
-
-        .discover-review-text {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            line-height: 1.6;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="css/discover.css">
+    
 </head>
 <body>
     <header class="header">
@@ -158,8 +20,8 @@
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
-            <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                <div class="header-actions">
+                <button class="header-btn" data-href="map.html">MAP</button>
                 <button class="header-btn">FAVS</button>
                 <button class="header-btn signup">SIGNUP</button>
             </div>
@@ -171,178 +33,22 @@
         <a href="discover.html" class="nav-link active">DISCOVER</a>
         <a href="reviewtab.html" class="nav-link">REVIEWS</a>
         <a href="community.html" class="nav-link">COMMUNITY</a>
-        <a href="#" class="nav-link">HELP</a>
     </nav>
-
     <main class="discover-page">
-        <h2 class="section-title">DISCOVER PC STORES</h2>
+        <div class="container">
+            <h2 class="section-title">DISCOVER</h2>
+            <div class="discover-filters">
+                <button class="filter-tag active" data-action="filterByLocation" data-arg="all" data-location="all">All</button>
+                <button class="filter-tag" data-action="filterByLocation" data-arg="Makati City" data-location="Makati City">Makati City</button>
+                <button class="filter-tag" data-action="filterByLocation" data-arg="Quezon City" data-location="Quezon City">Quezon City</button>
+                <button class="filter-tag" data-action="filterByLocation" data-arg="Pasay" data-location="Pasay">Pasay</button>
+            </div>
 
-        <div class="discover-filters">
-            <button class="filter-tag active" onclick="filterByLocation('all')">ALL LOCATIONS</button>
-            <button class="filter-tag" onclick="filterByLocation('Makati')">MAKATI</button>
-            <button class="filter-tag" onclick="filterByLocation('Quezon City')">QUEZON CITY</button>
-            <button class="filter-tag" onclick="filterByLocation('Pasig')">PASIG</button>
-            <button class="filter-tag" onclick="filterByLocation('BGC')">BGC</button>
-            <button class="filter-tag" onclick="filterByLocation('Manila')">MANILA</button>
-        </div>
-
-        <div class="discover-grid" id="discover-grid">
-            <!-- Will be populated by JavaScript -->
+            <div id="discover-grid" class="discover-grid"></div>
         </div>
     </main>
 
-    <footer class="custom-footer">
-        <div class="footer-container">
-
-            <div class="footer-left">
-            <div class="footer-logo">
-                <img src="logo-green.svg" alt="Tech-A-Muna Logo" class="logo-image">
-            </div>
-
-            <a href="contact-page.html" class="footer-btn">CONTACT US</a>
-            </div>
-
-            <div class="footer-divider"></div>
-
-            <div class="footer-right">
-            <ul>
-                <li><a href="about-page.html">ABOUT</a></li>
-                <li><a href="privacy-page.html">PRIVACY</a></li>
-                <li><a href="terms-page.html">TERMS</a></li>
-                <li><a href="social-links.html">SOCIAL LINKS</a></li>
-            </ul>
-            </div>
-
-        </div>
-        <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
-    </footer>
-
-    <script src="app.js"></script>
-    <script>
-        updateHeader();
-
-        const stores = [
-            { id: 1, name: 'PC Express', location: 'Makati', rating: 4.8, reviewCount: 127, image: 'pcexpress.svg' },
-            { id: 2, name: 'Octagon', location: 'Quezon City', rating: 4.6, reviewCount: 95, image: 'octagon.svg' },
-            { id: 3, name: 'Silicon Valley', location: 'Pasig', rating: 4.7, reviewCount: 113, image: 'siliconvalley.svg' },
-            { id: 4, name: 'PCHub', location: 'Manila', rating: 4.5, reviewCount: 78, image: 'logo-green.svg' },
-            { id: 5, name: 'DynaQuest PC', location: 'BGC', rating: 4.9, reviewCount: 156, image: 'dynaquest.svg' },
-            { id: 6, name: 'EasyPC', location: 'Makati', rating: 4.4, reviewCount: 64, image: 'easypc.svg' },
-            { id: 7, name: 'Bermor Techzone', location: 'Quezon City', rating: 4.6, reviewCount: 89, image: 'bermortechzone.svg' },
-            { id: 8, name: 'PC Worth', location: 'Pasig', rating: 4.8, reviewCount: 142, image: 'pcworth.svg' },
-            { id: 9, name: 'Ayoscomputer', location: 'Manila', rating: 4.5, reviewCount: 72, image: 'ayoscomputer.svg' },
-            { id: 10, name: 'Hardware Sugar', location: 'BGC', rating: 4.7, reviewCount: 98, image: 'hardwaresugar.svg' },
-            { id: 11, name: 'Laptop Factory', location: 'Makati', rating: 4.6, reviewCount: 85, image: 'laptop%20factory.svg' },
-            { id: 12, name: 'Gigahertz', location: 'Quezon City', rating: 4.8, reviewCount: 134, image: 'gigahertz.svg' },
-            { id: 13, name: 'PhilKor PC', location: 'Pasig', rating: 4.5, reviewCount: 67, image: 'logo-green.svg' },
-            { id: 14, name: 'DataBlitz', location: 'Manila', rating: 4.9, reviewCount: 203, image: 'databltiz.svg' },
-            { id: 15, name: 'Complink', location: 'BGC', rating: 4.4, reviewCount: 56, image: 'complink.svg' },
-            { id: 16, name: 'Asianic', location: 'Makati', rating: 4.7, reviewCount: 91, image: 'logo-green.svg' },
-            { id: 17, name: 'VillMan', location: 'Quezon City', rating: 4.8, reviewCount: 167, image: 'logo-green.svg' },
-            { id: 18, name: 'JDM Techno Computer', location: 'Pasig', rating: 4.5, reviewCount: 74, image: 'logo-green.svg' },
-            { id: 19, name: 'PC Options', location: 'Manila', rating: 4.6, reviewCount: 82, image: 'logo-green.svg' },
-            { id: 20, name: 'Belrei Computer Solutions', location: 'BGC', rating: 4.7, reviewCount: 95, image: 'logo-green.svg' }
-        ];
-
-        let currentFilter = 'all';
-
-        function loadStores(filter, storeIds) {
-            if (!filter) filter = 'all';
-            const grid = document.getElementById('discover-grid');
-            grid.innerHTML = '';
-
-            const reviews = getAllReviews();
-            
-            let filteredStores = stores;
-            if (Array.isArray(storeIds) && storeIds.length) {
-                filteredStores = stores.filter(s => storeIds.includes(s.id));
-            } else if (filter !== 'all') {
-                filteredStores = stores.filter(function(s) { return s.location === filter; });
-            }
-
-            filteredStores = filteredStores.sort(function() { return Math.random() - 0.5; });
-
-            filteredStores.forEach(function(store) {
-                const storeReviews = reviews.filter(function(r) { return r.storeName === store.name; }).slice(0, 2);
-                
-                const card = document.createElement('div');
-                card.className = 'discover-card';
-                card.onclick = function() { window.location.href = 'store-page.html'; };
-
-                const stars = '★'.repeat(Math.floor(store.rating)) + '☆'.repeat(5 - Math.floor(store.rating));
-                
-                let reviewsHTML = '';
-                if (storeReviews.length > 0) {
-                    reviewsHTML = '<div class="discover-reviews-preview">' +
-                        '<div class="discover-reviews-header">RECENT REVIEWS</div>';
-                    storeReviews.forEach(function(review) {
-                        reviewsHTML += '<div class="discover-review-snippet">' +
-                            '<div class="discover-review-user">' + review.username + ' - ' + '★'.repeat(review.rating) + '</div>' +
-                            '<div class="discover-review-text">"' + review.text.substring(0, 80) + (review.text.length > 80 ? '...' : '') + '"</div>' +
-                            '</div>';
-                    });
-                    reviewsHTML += '</div>';
-                }
-
-                card.innerHTML = '<img src="' + store.image + '" alt="' + store.name + '" class="discover-store-image">' +
-                    '<div class="discover-card-content">' +
-                    '<div class="discover-store-name">' + store.name + '</div>' +
-                    '<div class="discover-store-location">LOCATION: ' + store.location + '</div>' +
-                    '<div class="discover-rating">' +
-                    '<span class="discover-stars">' + stars + '</span>' +
-                    '<span class="discover-rating-text">' + store.rating + ' (' + store.reviewCount + ' reviews)</span>' +
-                    '</div>' +
-                    reviewsHTML +
-                    '</div>';
-
-                grid.appendChild(card);
-            });
-        }
-
-        function filterByLocation(location) {
-            currentFilter = location;
-            
-            document.querySelectorAll('.filter-tag').forEach(function(btn) {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            loadStores(location);
-        }
-
-        // Search products across stores and display matching establishments
-        function searchProductsAndShowStores(query) {
-            if (!query) { loadStores(currentFilter); return; }
-            const products = (typeof getAllProducts === 'function') ? getAllProducts() : [];
-            const matches = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
-            const storeIds = Array.from(new Set(matches.map(m => m.storeId)));
-            if (!storeIds.length) {
-                showNotification && showNotification('No stores found with that product', 'No results', 'warning');
-                return;
-            }
-            loadStores(currentFilter, storeIds);
-            const storeNames = stores.filter(s => storeIds.includes(s.id)).map(s => s.name);
-            showNotification && showNotification('Found in: ' + storeNames.join(', '), 'Product Availability', 'success');
-        }
-
-        // Wire header search input (press Enter to search products)
-        (function attachHeaderSearch() {
-            const headerSearch = document.querySelector('.search-input');
-            if (!headerSearch) return;
-            headerSearch.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const q = this.value.trim();
-                    // try product search first
-                    searchProductsAndShowStores(q);
-                }
-            });
-            headerSearch.addEventListener('input', function() {
-                if (!this.value.trim()) loadStores(currentFilter);
-            });
-        })();
-
-        loadStores();
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/discover.js"></script>
 </body>
 </html>

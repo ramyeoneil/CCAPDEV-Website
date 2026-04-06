@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Favorites | Tech-A-Muna</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/favorites.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -22,9 +23,9 @@
                 <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
-                <button class="header-btn" onclick="window.location.href='favorites.html'">FAVS</button>
-                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+                <button class="header-btn" data-href="map.html">MAP</button>
+                <button class="header-btn" data-href="favorites.html">FAVS</button>
+                <button class="header-btn signup" data-href="signup-user.html">SIGNUP</button>
             </div>
         </div>
     </header>
@@ -34,30 +35,29 @@
         <a href="discover.html" class="nav-link">DISCOVER</a>
         <a href="reviewtab.html" class="nav-link">REVIEWS</a>
         <a href="community.html" class="nav-link">COMMUNITY</a>
-        <a href="#" class="nav-link">HELP</a>
     </nav>
 
     <main class="main-content">
         <h2 class="section-title">MY FAVORITES</h2>
 
         <!-- Favorite Stores -->
-        <section class="featured-stores" style="margin-bottom: 4rem;">
-            <h3 style="font-size: 1.2rem; color: var(--primary-green); letter-spacing: 2px; margin-bottom: 2rem;">FAVORITE STORES</h3>
+        <section class="featured-stores">
+            <h3 class="favorites-heading">FAVORITE STORES</h3>
             <div class="stores-grid" id="favorite-stores-grid">
                 <!-- Will be populated by JS -->
             </div>
-            <div id="no-favorite-stores" style="display: none; text-align: center; padding: 3rem; color: #666; font-family: var(--font-mono);">
+            <div id="no-favorite-stores" class="no-favorite">
                 No favorite stores yet. Browse stores and add them to favorites!
             </div>
         </section>
 
         <!-- Favorite Reviews -->
-        <section class="reviews-page" style="padding: 0;">
-            <h3 style="font-size: 1.2rem; color: var(--primary-green); letter-spacing: 2px; margin-bottom: 2rem;">FAVORITE REVIEWS</h3>
+        <section class="reviews-page">
+            <h3 class="favorites-heading">FAVORITE REVIEWS</h3>
             <div class="reviews-grid" id="favorite-reviews-grid">
                 <!-- Will be populated by JS -->
             </div>
-            <div id="no-favorite-reviews" style="display: none; text-align: center; padding: 3rem; color: #666; font-family: var(--font-mono);">
+            <div id="no-favorite-reviews" class="no-favorite">
                 No favorite reviews yet. Start favoriting reviews you find helpful!
             </div>
         </section>
@@ -89,118 +89,7 @@
         <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
     </footer>
 
-    <script src="app.js"></script>
-    <script>
-        // Check if user is logged in
-        if (!isLoggedIn()) {
-            showNotification('Please log in to view your favorites', 'Login Required', 'warning');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
-        }
-
-        // Update header based on login status
-        updateHeader();
-        makeLogoClickable();
-
-        // Load favorite stores
-        function loadFavoriteStores() {
-            const favoriteStoreIds = JSON.parse(localStorage.getItem('techamuna_favorite_stores') || '[]');
-            const storesGrid = document.getElementById('favorite-stores-grid');
-            const noStores = document.getElementById('no-favorite-stores');
-
-            if (favoriteStoreIds.length === 0) {
-                noStores.style.display = 'block';
-                return;
-            }
-
-            storesGrid.innerHTML = '';
-            favoriteStoreIds.forEach((storeId, index) => {
-                const card = document.createElement('div');
-                card.className = 'store-card';
-                card.style.cursor = 'pointer';
-                card.onclick = () => window.location.href = 'store-page.html';
-                card.innerHTML = `
-                    <img src="https://via.placeholder.com/200x150/d9d9d9/00703c?text=STORE+${storeId}" alt="Favorite Store">
-                    <div style="position: absolute; top: 10px; right: 10px;">
-                        <button onclick="event.stopPropagation(); removeFavoriteStore(${storeId})" 
-                                style="background: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.5rem;">
-                            ♥
-                        </button>
-                    </div>
-                `;
-                storesGrid.appendChild(card);
-            });
-        }
-
-        // Load favorite reviews
-        function loadFavoriteReviews() {
-            const favoriteReviewIds = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
-            const reviewsGrid = document.getElementById('favorite-reviews-grid');
-            const noReviews = document.getElementById('no-favorite-reviews');
-
-            if (favoriteReviewIds.length === 0) {
-                noReviews.style.display = 'block';
-                return;
-            }
-
-            const allReviews = getAllReviews();
-            reviewsGrid.innerHTML = '';
-
-            favoriteReviewIds.forEach(reviewId => {
-                const review = allReviews.find(r => r.id === reviewId);
-                if (review) {
-                    const card = document.createElement('div');
-                    card.className = 'review-card';
-                    card.style.cursor = 'pointer';
-                    card.onclick = () => window.location.href = `review-detail.html?id=${review.id}`;
-                    card.innerHTML = `
-                        <div class="review-header">
-                            <div class="review-user">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                                <div>
-                                    <h4>${review.username}</h4>
-                                    <span>${review.date}</span>
-                                </div>
-                            </div>
-                            <button onclick="event.stopPropagation(); removeFavoriteReview(${review.id})" 
-                                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-green);">
-                                ♥
-                            </button>
-                        </div>
-                        <img src="https://via.placeholder.com/600x400/d9d9d9/00703c?text=PC+STORE" class="review-image" alt="Store">
-                        <div class="review-content">
-                            <h3>${review.storeName || 'PC Store'}</h3>
-                            <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                            <p>${review.text}</p>
-                        </div>
-                    `;
-                    reviewsGrid.appendChild(card);
-                }
-            });
-        }
-
-        // Remove favorite store
-        function removeFavoriteStore(storeId) {
-            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_stores') || '[]');
-            const newFavorites = favorites.filter(id => id !== storeId);
-            localStorage.setItem('techamuna_favorite_stores', JSON.stringify(newFavorites));
-            showNotification('Removed from favorites', 'Removed', 'warning');
-            loadFavoriteStores();
-        }
-
-        // Remove favorite review
-        function removeFavoriteReview(reviewId) {
-            const favorites = JSON.parse(localStorage.getItem('techamuna_favorite_reviews') || '[]');
-            const newFavorites = favorites.filter(id => id !== reviewId);
-            localStorage.setItem('techamuna_favorite_reviews', JSON.stringify(newFavorites));
-            showNotification('Removed from favorites', 'Removed', 'warning');
-            loadFavoriteReviews();
-        }
-
-        // Load favorites on page load
-        loadFavoriteStores();
-        loadFavoriteReviews();
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/favorites.js"></script>
 </body>
 </html>

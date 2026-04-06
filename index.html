@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-A-Muna</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,9 +17,9 @@
                 <img src="logo-white.svg" alt="Tech-A-Muna Logo" class="logo-image">
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                <button class="header-btn" data-href="map.html">MAP</button>
                 <button class="header-btn">FAVS</button>
-                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+                <button class="header-btn signup" data-href="signup-user.html">SIGNUP</button>
             </div>
         </div>
     </header>
@@ -28,7 +28,6 @@
         <a href="discover.html" class="nav-link">DISCOVER</a>
         <a href="reviewtab.html" class="nav-link">REVIEWS</a>
         <a href="community.html" class="nav-link">COMMUNITY</a>
-        <a href="#" class="nav-link">HELP</a>
     </nav>
     <main class="main-content">
         <!-- Hero search placed center of page -->
@@ -49,89 +48,7 @@
                 <input type="radio" name="carousel" id="slide3">
                 
                 <div class="carousel-track">
-                    <!-- Slide 1 -->
-                    <div class="carousel-slide">
-                        <div class="slide-content">
-                            <div class="store-featured">
-                                <div class="store-image">
-                                    <img src="pcworth.svg" alt="PCWorth Store">
-                                </div>
-                                <div class="store-rating">
-                                    <div class="stars">★★★★★</div>
-                                </div>
-                            </div>
-                            <div class="reviews-list">
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Outstanding customer service and lightning-fast shipping times</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Best prices on high-end components with genuine warranties</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Expert technical support team helped build my dream setup</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="carousel-slide">
-                        <div class="slide-content">
-                            <div class="store-featured">
-                                <div class="store-image">
-                                    <img src="easypc.svg" alt="EasyPC Store">
-                                </div>
-                                <div class="store-rating">
-                                    <div class="stars">★★★★★</div>
-                                </div>
-                            </div>
-                            <div class="reviews-list">
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Massive selection of gaming peripherals at competitive rates</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Hassle-free returns and exceptional warranty coverage policy</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Same-day delivery available for urgent hardware replacements</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="carousel-slide">
-                        <div class="slide-content">
-                            <div class="store-featured">
-                                <div class="store-image">
-                                    <img src="gigahertz.svg" alt="GigaHertz Store">
-                                </div>
-                                <div class="store-rating">
-                                    <div class="stars">★★★★★</div>
-                                </div>
-                            </div>
-                            <div class="reviews-list">
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Knowledgeable staff who actually understand PC building needs</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Regular sales and bundle deals make upgrades more affordable</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                                <div class="review-headline" onclick="window.location.href='store-page.html'">
-                                    <span class="review-text">Custom PC building service with transparent pricing structure</span>
-                                    <span class="review-cta">CLICK FOR THE WHOLE REVIEW</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Carousel slides are populated dynamically from the backend API by js/index.js -->
                 </div>
 
                 <!-- Carousel Dots  -->
@@ -149,31 +66,7 @@
             <h2 class="section-title">OFFICIAL PARTNER STORES</h2>
             <div class="verified-carousel">
                 <div class="verified-track">
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="databltiz.svg" alt="Databltiz">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="complink.svg" alt="CompLink">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="bermortechzone.svg" alt="BermorTechZone">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
-                    <!-- duplicate for seamless scroll -->
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="ayoscomputer.svg" alt="Ayos Computer">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="siliconvalley.svg" alt="Silicon Valley">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
-                    <div class="verified-card" onclick="window.location.href='store-page.html'">
-                        <img src="hardwaresugar.svg" alt="Hardware Sugar">
-                        <div class="verified-rating">★★★★★</div>
-                    </div>
+                    <!-- Verified partner cards are populated dynamically from the backend API -->
                 </div>
             </div>
         </section>
@@ -189,11 +82,11 @@
                             <div class="card card-c">Rate pricing & service</div>
                         </div>
                     </div>
-                    <div class="review-cta">
+                    <div class="add-review-cta">
                         <h2>Have feedback? Add a review</h2>
                         <p>Let other builders know about pricing, customer service, and warranty experiences. Your PC Builder's Score helps the community pick trusted stores.</p>
                         <div class="cta-actions">
-                            <button class="primary-cta" onclick="window.location.href='make-review.html'">Write a Review</button>
+                            <button class="primary-cta hero-cta" data-href="make-review.html">Write a Review</button>
                         </div>
                     </div>
                 </div>
@@ -206,8 +99,8 @@
                 <div class="store-cta">
                     <h2>Own a local store?</h2>
                     <p>Join Tech-A-Muna to reach more builders. Claim your store profile, manage reviews, and show verified warranty policies.</p>
-                    <div class="cta-actions">
-                        <button class="primary-cta" onclick="window.location.href='signup-store.html'">Claim Your Store</button>
+                        <div class="cta-actions">
+                        <button class="primary-cta hero-cta" data-href="signup-store.html">Claim Your Store</button>
                     </div>
                 </div>
                 <div class="store-visual">
@@ -251,9 +144,7 @@
     </footer>
 
 
-    <script src="app.js"></script>
-    <script src="index.js"></script>
-    <script>
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

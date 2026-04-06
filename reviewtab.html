@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-A-Muna | Reviews</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:10000; align-items:center; justify-content:center; }
+        .modal.show { display:flex; }
+        .modal-content { background:#fff; width:min(560px, 92vw); border-radius:12px; padding:1.2rem 1.4rem; max-height:85vh; overflow:auto; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+        .close-btn { border:none; background:none; font-size:1.8rem; cursor:pointer; }
+        .form-group { margin-bottom:0.8rem; }
+        .form-group label { display:block; margin-bottom:0.35rem; color:var(--primary-green); font-weight:600; letter-spacing:1px; font-size:0.8rem; }
+        .form-group input, .form-group textarea, .form-group select { width:100%; padding:.65rem .7rem; border:2px solid var(--light-gray); border-radius:8px; font-family:var(--font-mono); }
+        .form-group textarea { min-height:100px; resize:vertical; }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -19,9 +30,9 @@
                 <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                <button class="header-btn" data-href="map.html">MAP</button>
                 <button class="header-btn">FAVS</button>
-                <button class="header-btn signup" onclick="window.location.href='signup-user.html'">SIGNUP</button>
+                <button class="header-btn signup" data-href="signup-user.html">SIGNUP</button>
             </div>
         </div>
     </header>
@@ -31,7 +42,6 @@
         <a href="discover.html" class="nav-link">DISCOVER</a>
         <a href="reviewtab.html" class="nav-link active">REVIEWS</a>
         <a href="community.html" class="nav-link">COMMUNITY</a>
-        <a href="#" class="nav-link">HELP</a>
     </nav>
     <main class="reviews-page">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
@@ -45,7 +55,7 @@
                 <label style="display:flex;align-items:center;gap:0.25rem;margin-left:0.5rem;">
                     <input type="checkbox" id="warranty-watch"> Warranty Watch
                 </label>
-                <button id="create-review-btn" class="header-btn" style="margin-left:0.5rem;" onclick="window.location.href='make-review.html'">Write a Review</button>
+                <button id="create-review-btn" class="header-btn" style="margin-left:0.5rem;" data-href="make-review.html">Write a Review</button>
             </div>
         </div>
 
@@ -55,6 +65,39 @@
             <!-- Will be populated by JS -->
         </div>
     </main>
+    <div id="review-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>WRITE A REVIEW</h2>
+                <button class="close-btn" id="close-review-modal">&times;</button>
+            </div>
+            <form id="review-form">
+                <div class="form-group">
+                    <label>Store</label>
+                    <select id="review-store" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="review-rating" required>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Okay</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Bad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Headline</label>
+                    <input type="text" id="review-headline" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea id="review-text" required></textarea>
+                </div>
+                <button type="submit" class="auth-btn">POST REVIEW</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Review creation moved to make-review.html; modal removed -->
     <footer class="custom-footer">
@@ -82,134 +125,7 @@
         </div>
         <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
     </footer>
-    <script src="app.js"></script>
-    <script>
-        // Update header and UI
-        updateHeader();
-        makeLogoClickable();
-
-        const reviewsContainer = document.getElementById('reviews-grid-container');
-        const sortSelect = document.getElementById('review-sort');
-        const warrantyWatch = document.getElementById('warranty-watch');
-        const subtitle = document.getElementById('reviews-subtitle');
-
-        function renderReviews() {
-            const all = getAllReviews();
-            let list = all.slice();
-
-            // Warranty watch filter: show reviews with low afterSales or mentioning warranty
-            if (warrantyWatch.checked) {
-                list = list.filter(r => (r.builderScores && r.builderScores.afterSales <= 3) || /warranty|after-sales|after sales/i.test(r.text));
-                subtitle.textContent = `Showing warranty-related reviews (${list.length})`;
-            } else {
-                subtitle.textContent = `Showing ${list.length} reviews`;
-            }
-
-            // Sorting
-            const sort = sortSelect.value;
-            if (sort === 'helpful') {
-                list.sort((a,b) => (b.upvotes || 0) - (a.upvotes || 0));
-            } else {
-                list.sort((a,b) => new Date(b.date) - new Date(a.date));
-            }
-
-            reviewsContainer.innerHTML = '';
-
-            list.forEach(review => {
-                const card = document.createElement('div');
-                card.className = 'review-card';
-
-                const current = getCurrentUser();
-
-                const userSection = `
-                    <div class="review-header">
-                        <div class="review-user">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?20170328184010" alt="User">
-                            <div>
-                                <h4>${review.username}</h4>
-                                <span>${review.date}</span>
-                            </div>
-                        </div>
-                        <div style="display:flex;gap:0.5rem;align-items:center;">
-                            <button class="header-btn" data-upvote="${review.id}">▲ ${review.upvotes || 0}</button>
-                            ${current && current.id === review.userId ? `<button class="header-btn edit-btn" data-edit="${review.id}">Edit</button><button class="header-btn delete-btn" data-delete="${review.id}">Delete</button>` : ''}
-                        </div>
-                    </div>
-                `;
-
-                const mediaHTML = (review.media && review.media.length) ? `<div style="margin:0.5rem 0;">${review.media.slice(0,3).map(m=>`<img src="${m}" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;margin-bottom:6px;">`).join('')}</div>` : '';
-
-                const scores = review.builderScores || {};
-                const scoresHTML = `<div style="font-family:var(--font-mono);color:#555;margin-top:6px;">Pricing: ${scores.pricing||'-'} · Service: ${scores.customerService||'-'} · After-Sales: ${scores.afterSales||'-'}</div>`;
-
-                card.innerHTML = `
-                    ${userSection}
-                    <img src="https://via.placeholder.com/600x200/d9d9d9/00703c?text=Store" class="review-image" alt="Store">
-                    <div class="review-content">
-                        <h3>${review.storeName || 'PC Store'}</h3>
-                        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                        <h4 style="margin:6px 0;">${review.headline || ''}</h4>
-                        <p>${(review.text || '').slice(0,200)}${(review.text||'').length>200?'...':''}</p>
-                        ${scoresHTML}
-                        ${mediaHTML}
-                    </div>
-                `;
-
-                // navigate to detail on click except buttons
-                card.addEventListener('click', (ev) => {
-                    if (ev.target.matches('button') || ev.target.closest('button')) return;
-                    window.location.href = `review-detail.html?id=${review.id}`;
-                });
-
-                // upvote handler
-                card.querySelectorAll('[data-upvote]').forEach(b => b.addEventListener('click', async (e)=>{
-                    e.stopPropagation();
-                    if (!requireLogin('upvote reviews')) return;
-                    const uid = getCurrentUser().id;
-                    upvoteReview(parseInt(b.getAttribute('data-upvote')), uid);
-                    renderReviews();
-                }));
-
-                // edit/delete handlers
-                card.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', (e)=>{
-                    e.stopPropagation();
-                    openEditModal(parseInt(b.getAttribute('data-edit')));
-                }));
-
-                card.querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', async (e)=>{
-                    e.stopPropagation();
-                    const id = parseInt(b.getAttribute('data-delete'));
-                    const confirmed = await showConfirmation('Delete this review?', 'Confirm Delete');
-                    if (confirmed) {
-                        deleteReview(id);
-                        showNotification('Review deleted', 'Deleted', 'warning');
-                        renderReviews();
-                    }
-                }));
-
-                reviewsContainer.appendChild(card);
-            });
-        }
-
-        // Modal removed. 'Write a Review' and edit actions navigate to make-review.html
-        function openEditModal(reviewId) {
-            const reviews = getAllReviews();
-            const r = reviews.find(x => x.id === reviewId);
-            if (!r) return;
-            if (!getCurrentUser() || getCurrentUser().id !== r.userId) { showNotification('Not authorized', 'Error', 'error'); return; }
-            // Redirect to the standalone make-review page with edit query
-            window.location.href = `make-review.html?edit=${reviewId}`;
-        }
-        // Wire controls
-        document.getElementById('create-review-btn').addEventListener('click', ()=>{
-            if (!requireLogin('write a review')) return;
-            window.location.href = 'make-review.html';
-        });
-        sortSelect.addEventListener('change', renderReviews);
-        warrantyWatch.addEventListener('change', renderReviews);
-
-        // Initial render
-        renderReviews();
-    </script>
+    <script src="js/app.js"></script>
+    <script src="js/reviewtab.js"></script>
 </body>
 </html>

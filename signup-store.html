@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech-A-Muna | Store Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,9 +19,9 @@
                 <input type="text" class="search-input" placeholder="SEARCH FOR PC STORES / PRODUCTS">
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="window.location.href='map.html'">MAP</button>
+                <button class="header-btn" data-href="map.html">MAP</button>
                 <button class="header-btn">FAVS</button>
-                <button class="header-btn signup" onclick="window.location.href='login.html'">LOGIN</button>
+                <button class="header-btn signup" data-href="login.html">LOGIN</button>
             </div>
         </div>
     </header>
@@ -30,7 +30,6 @@
         <a href="discover.html" class="nav-link">DISCOVER</a>
         <a href="reviewtab.html" class="nav-link">REVIEWS</a>
         <a href="community.html" class="nav-link">COMMUNITY</a>
-        <a href="#" class="nav-link">HELP</a>
     </nav>
     <main class="auth-page">
         <div class="auth-card">
@@ -77,7 +76,7 @@
         </div>
         <div class="footer-copy">© 2026 Group RAMBUTAN. All rights reserved.</div>
     </footer>
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
     <script>
         document.getElementById('store-signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
